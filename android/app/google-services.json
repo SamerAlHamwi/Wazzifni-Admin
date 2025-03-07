@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1056081118484",
+    "project_id": "wazzifni-project",
+    "storage_bucket": "wazzifni-project.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056081118484:android:37da361eb61f16f650ee01",
+        "android_client_info": {
+          "package_name": "com.wazzifni.admin.wazzifni_admin"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxQuRKivjK6ujHc-nHomKOCYePG0JqslA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1056081118484:android:3424b9a95b2d4f3150ee01",
+        "android_client_info": {
+          "package_name": "com.wazzifni.iraq"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxQuRKivjK6ujHc-nHomKOCYePG0JqslA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
