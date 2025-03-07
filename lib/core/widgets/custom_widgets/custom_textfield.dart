@@ -77,35 +77,35 @@ class CustomTextField extends StatelessWidget {
             filled: true,
             fillColor: AppColors.white,
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: isWithBorder
                   ? const BorderSide(color: AppColors.primaryColor, width: 1.5)
                   : BorderSide.none,
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: isWithBorder
                   ? const BorderSide(color: AppColors.primaryColor, width: 1.5)
                   : BorderSide.none,
             ),
             disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: isWithBorder
                   ? const BorderSide(color: AppColors.primaryColor, width: 1.5)
                   : BorderSide.none,
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: isWithBorder
                   ? const BorderSide(color: AppColors.primaryColor, width: 2.0)
                   : BorderSide.none,
             ),
             errorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.red, width: 1.5),
             ),
             focusedErrorBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
+              borderRadius: BorderRadius.circular(8),
               borderSide: const BorderSide(color: AppColors.red, width: 1.5),
             ),
             errorStyle: AppText.fontSizeSmallTextStyle.copyWith(

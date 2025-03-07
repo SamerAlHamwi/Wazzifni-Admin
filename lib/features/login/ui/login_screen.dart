@@ -17,6 +17,7 @@ import '../../../core/common/style/gaps.dart';
 import '../../../core/common/style/padding_insets.dart';
 import '../../../core/constants/appcolors.dart';
 import '../../../core/utils/Navigation/Navigation.dart';
+import '../../home/ui/root_page.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -37,6 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Container(
           padding: PaddingInsets.extraBigPaddingAll,
+          margin: PaddingInsets.extraBigPaddingAll,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(12),
@@ -48,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Gaps.vGap4,
+                Gaps.vGap2,
                 Image.asset(
                   AppAssets.logo,
                   width: 150,
@@ -63,38 +65,22 @@ class _LoginScreenState extends State<LoginScreen> {
                   'login_hint'.tr(),
                   style: AppText.fontSizeNormalTextStyle,
                 ),
-                Gaps.vGap12,
+                Gaps.vGap4,
                 SizedBox(
-                  width: 100.w,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Container(
-                        width: 60,
-                        height: 55,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          gradient: AppColors.primaryGradient,
-                          boxShadow: AppColors.boxShadow,
-                        ),
-                        child: Center(
-                          child: Text(
-                            '964',
-                            style: AppText.fontSizeNormalTextStyle.copyWith(
-                                color: AppColors.white,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ),
-                      Gaps.hGap2,
-                      Expanded(
-                        child: CustomTextField(
-                            controller: controller,
-                            keyboardType: TextInputType.phone,
-                            labelText: 'phone_number'.tr(),
-                        ),
-                      ),
-                    ],
+                  width: 70.w,
+                  child: CustomTextField(
+                      controller: controller,
+                      keyboardType: TextInputType.phone,
+                      labelText: 'user_name'.tr(),
+                  ),
+                ),
+                Gaps.vGap2,
+                SizedBox(
+                  width: 70.w,
+                  child: CustomTextField(
+                    controller: controller,
+                    keyboardType: TextInputType.phone,
+                    labelText: 'password'.tr(),
                   ),
                 ),
                 Gaps.vGap4,
@@ -139,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   text: 'login'.tr(),
                   onTap: () {
-
+                    Navigation.push(AdminHomePage());
                   },
                 ),
                 Gaps.vGap2,

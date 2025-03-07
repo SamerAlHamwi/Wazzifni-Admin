@@ -2,7 +2,6 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
@@ -12,6 +11,17 @@ import 'package:timeago/timeago.dart' as timeago;
 
 
 class Utils{
+
+  static int calculateRowItemsCount(constraints,itemWidth){
+    int itemsPerRow =
+    (constraints.maxWidth / itemWidth)
+        .floor();
+    itemsPerRow =
+    itemsPerRow > 0
+        ? itemsPerRow
+        : 1;
+    return itemsPerRow;
+  }
 
   static String getPostStatus(int status) {
     switch (WorkApplicationStatus.values[status]) {
@@ -70,13 +80,6 @@ class Utils{
     }
 
     return status.isGranted;
-  }
-
-  static changeAppLanguage({
-    required BuildContext context,
-    required String languageCode,
-  }) async {
-
   }
 
 

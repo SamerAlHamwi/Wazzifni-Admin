@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
 
@@ -31,7 +29,7 @@ class _CustomDropdownState extends State<CustomDropdown> {
   @override
   void initState() {
     super.initState();
-    if(widget.selectedItem != null){
+    if (widget.selectedItem != null) {
       _selectedItem = widget.selectedItem;
     }
   }
@@ -41,19 +39,14 @@ class _CustomDropdownState extends State<CustomDropdown> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.labelText != null)
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                widget.labelText!,
-                style: AppText.fontSizeNormalTextStyle.copyWith(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Gaps.vGap1,
-            ],
-          ),
+        // if (widget.labelText != null)
+        //   Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //
+        //       Gaps.vGap1,
+        //     ],
+        //   ),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -73,18 +66,25 @@ class _CustomDropdownState extends State<CustomDropdown> {
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton<String>(
+                hint: Text(
+                  widget.labelText ?? '',
+                  style: AppText.fontSizeNormalTextStyle.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 isExpanded: true,
                 value: _selectedItem,
-                items: widget.items.map((DropDownItem item) {
-                  return DropdownMenuItem<String>(
-                    value: item.id.toString(),
-                    child: Text(
-                      item.name,
-                      textAlign: TextAlign.end,
-                      style: AppText.fontSizeNormalTextStyle,
-                    ),
-                  );
-                }).toList(),
+                items:
+                    widget.items.map((DropDownItem item) {
+                      return DropdownMenuItem<String>(
+                        value: item.id.toString(),
+                        child: Text(
+                          item.name,
+                          textAlign: TextAlign.end,
+                          style: AppText.fontSizeNormalTextStyle,
+                        ),
+                      );
+                    }).toList(),
                 onChanged: (String? newValue) {
                   setState(() {
                     _selectedItem = newValue;
@@ -105,4 +105,3 @@ class _CustomDropdownState extends State<CustomDropdown> {
     );
   }
 }
-
