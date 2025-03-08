@@ -44,6 +44,7 @@ class AppAssets {
 
   ///Images
   static const image = 'assets/images/image.png';
+  static const cover = 'assets/images/cover.png';
   static const google = 'assets/icons/google.png';
   static const map = 'assets/icons/Map.png';
 

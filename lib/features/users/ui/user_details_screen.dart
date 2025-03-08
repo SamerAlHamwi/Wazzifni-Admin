@@ -75,116 +75,170 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       padding: PaddingInsets.normalPaddingAll,
                       child: Column(
                         children: [
-                          Gaps.vGap2,
-                          Text(
-                            'main_info'.tr(),
-                            style: AppText.fontSizeMediumTextStyle
-                                .copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          Gaps.vGap2,
-                          //Work Experience
-                          AccountInfoWidget(
-                            title: 'experience'.tr(),
-                            iconPath: AppAssets.jobIcon,
-                            onTap: () async {
-
-                            },
-                            body: Column(
-                              children: workExperiences.isNotEmpty
-                                  ? workExperiences
-                                  .map((e) => WorkExperienceWidget(
-                                e: e,
-                              ))
-                                  .toList()
-                                  : userProfileModel!.workExperiences!
-                                  .map((e) => WorkExperienceWidget(
-                                e: e,
-                              ))
-                                  .toList(),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              borderRadius: BorderRadius.circular(12),
+                              boxShadow: AppColors.boxShadow2,
                             ),
-                          ),
-                          //Languages
-                          AccountInfoWidget(
-                            title: 'languages'.tr(),
-                            iconPath: AppAssets.languageIcon,
-                            isWithEdit: true,
-                            onTap: () async {
-
-                            },
-                            body: LanguagesListWidget(
-                              languages: languages.isNotEmpty
-                                  ? languages
-                                  .map((e) => e.displayName ?? '')
-                                  .toList()
-                                  : userProfileModel!.spokenLanguages!
-                                  .map((e) =>
-                              e.spokenLanguage!.displayName ?? '')
-                                  .toList(),
-                            ),
-                          ),
-                          Gaps.vGap2,
-                          Text(
-                            'extra_info'.tr(),
-                            style: AppText.fontSizeMediumTextStyle.copyWith(fontWeight: FontWeight.w600),
-                          ),
-                          Gaps.vGap2,
-                          //Educations
-                          if (userProfileModel!.educations != null)
-                            AccountInfoWidget(
-                              title: 'education_level'.tr(),
-                              iconPath: AppAssets.schoolIcon,
-                              onTap: () async {
-
-                              },
-                              body: Column(
-                                children: educations.isNotEmpty
-                                    ? educations
-                                    .map((e) => EducationWidget(
-                                  e: e,
-                                ))
-                                    .toList()
-                                    : userProfileModel.educations!
-                                    .map((e) => EducationWidget(
-                                  e: e,
-                                ))
-                                    .toList(),
+                            child: Expanded(
+                              child: Row(
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: Image.asset(
+                                      AppAssets.companyLogo,
+                                      height: 48,
+                                      width: 48,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  Gaps.hGap2,
+                                  SizedBox(
+                                    width: 125,
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          userProfileModel!.user?.registrationFullName ?? '',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppText.fontSizeMediumTextStyle.copyWith(
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${userProfileModel.city?.name ?? ''} - ${userProfileModel.user?.phoneNumber ?? ''}',
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: AppText.fontSizeNormalTextStyle.copyWith(
+                                            color: AppColors.darkText,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          //CV
-                          if (userProfileModel.cv != null)
-                            AccountInfoWidget(
-                              title: 'cv'.tr(),
-                              iconPath: AppAssets.cvIcon,
-                              isWithEdit: true,
-                              onTap: () {
-
-                              },
-                              body: CvWidget(
-                                isWithDelete: false,
-                                fileUrl: userProfileModel.cv?.url,
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Gaps.vGap2,
+                              Text(
+                                'main_info'.tr(),
+                                style: AppText.fontSizeMediumTextStyle
+                                    .copyWith(fontWeight: FontWeight.w600),
                               ),
-                            ),
-                          //Skills
-                          if (userProfileModel.skills != null)
-                            AccountInfoWidget(
-                              title: 'skills'.tr(),
-                              iconPath: AppAssets.cvIcon,
-                              isWithAdd: userProfileModel.skills!.isEmpty ? true : false,
-                              isWithEdit: userProfileModel.skills!.isNotEmpty ? true : false,
-                              onTap: () async {
-
-                              },
-                              body: LanguagesListWidget(
-                                languages: skillsModel.isNotEmpty
-                                    ? skillsModel
-                                    .map((e) => e.name ?? '')
-                                    .toList()
-                                    : userProfileModel.skills!
-                                    .map((e) => e.name ?? '')
-                                    .toList(),
+                              Gaps.vGap2,
+                              //Work Experience
+                              AccountInfoWidget(
+                                title: 'experience'.tr(),
+                                iconPath: AppAssets.jobIcon,
+                                isWithAdd: false,
+                                isWithEdit: false,
+                                onTap: () async {},
+                                body: Column(
+                                  children: workExperiences.isNotEmpty
+                                      ? workExperiences
+                                      .map((e) => WorkExperienceWidget(
+                                    e: e,
+                                  ))
+                                      .toList()
+                                      : userProfileModel.workExperiences!
+                                      .map((e) => WorkExperienceWidget(
+                                    e: e,
+                                  ))
+                                      .toList(),
+                                ),
                               ),
-                            ),
-                          Gaps.vGap2,
+                              //Languages
+                              AccountInfoWidget(
+                                title: 'languages'.tr(),
+                                iconPath: AppAssets.languageIcon,
+                                isWithAdd: false,
+                                isWithEdit: false,
+                                onTap: () {},
+                                body: LanguagesListWidget(
+                                  languages: languages.isNotEmpty
+                                      ? languages
+                                      .map((e) => e.displayName ?? '')
+                                      .toList()
+                                      : userProfileModel.spokenLanguages!
+                                      .map((e) =>
+                                  e.spokenLanguage!.displayName ?? '')
+                                      .toList(),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Gaps.vGap2,
+                              Text(
+                                'extra_info'.tr(),
+                                style: AppText.fontSizeMediumTextStyle.copyWith(fontWeight: FontWeight.w600),
+                              ),
+                              Gaps.vGap2,
+                              //Educations
+                              if (userProfileModel.educations != null)
+                                AccountInfoWidget(
+                                  title: 'education_level'.tr(),
+                                  iconPath: AppAssets.schoolIcon,
+                                  isWithAdd: false,
+                                  isWithEdit: false,
+                                  onTap: () {},
+                                  body: Column(
+                                    children: educations.isNotEmpty
+                                        ? educations
+                                        .map((e) => EducationWidget(
+                                      e: e,
+                                    ))
+                                        .toList()
+                                        : userProfileModel.educations!
+                                        .map((e) => EducationWidget(
+                                      e: e,
+                                    ))
+                                        .toList(),
+                                  ),
+                                ),
+                              //CV
+                              if (userProfileModel.cv != null)
+                                AccountInfoWidget(
+                                  title: 'cv'.tr(),
+                                  iconPath: AppAssets.cvIcon,
+                                  isWithAdd: false,
+                                  isWithEdit: false,
+                                  onTap: () {},
+                                  body: CvWidget(
+                                    isWithDelete: false,
+                                    fileUrl: userProfileModel.cv?.url,
+                                  ),
+                                ),
+                              //Skills
+                              if (userProfileModel.skills != null)
+                                AccountInfoWidget(
+                                  title: 'skills'.tr(),
+                                  iconPath: AppAssets.cvIcon,
+                                  isWithAdd: false,
+                                  isWithEdit: false,
+                                  onTap: () {},
+                                  body: LanguagesListWidget(
+                                    languages: skillsModel.isNotEmpty
+                                        ? skillsModel
+                                        .map((e) => e.name ?? '')
+                                        .toList()
+                                        : userProfileModel.skills!
+                                        .map((e) => e.name ?? '')
+                                        .toList(),
+                                  ),
+                                ),
+                              Gaps.vGap2,
+                            ],
+                          ),
                         ],
                       ),
                     ),
@@ -196,41 +250,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     );
-  }
-
-  showSaveButton() {
-    if (cvPath != null ||
-        educations.isNotEmpty ||
-        languages.isNotEmpty ||
-        workExperiences.isNotEmpty ||
-        selectedSkills.isNotEmpty) {
-      return true;
-    }
-    return false;
-  }
-
-  prepareData(UserProfileModel userProfileModel) {
-    if (languages.isEmpty) {
-      languages.addAll(userProfileModel.spokenLanguages!
-          .map((e) => LanguageModel(
-        name: e.spokenLanguage!.name ?? '',
-        displayName: e.spokenLanguage!.displayName ?? '',
-        id: e.spokenLanguage!.id,
-        oralLevel: e.oralLevel,
-        writingLevel: e.writingLevel,
-        isNative: e.isNative,
-      ))
-          .toList());
-    }
-    if(educations.isEmpty){
-      educations.addAll(userProfileModel.educations!);
-    }
-    if(workExperiences.isEmpty){
-      workExperiences.addAll(userProfileModel.workExperiences!);
-    }
-    if(selectedSkills.isEmpty){
-      selectedSkills.addAll(userProfileModel.skills!.map((e)=> e.id!).toList());
-    }
   }
 }
 
@@ -308,14 +327,4 @@ class WorkExperienceWidget extends StatelessWidget {
   }
 }
 
-// AccountInfoWidget(
-//   title: 'account_info'.tr(),
-//   iconPath: AppAssets.profileIcon,
-//   onTap: () {
-//     Navigation.push(const AboutMeScreen());
-//   },
-//   body: Text(
-//     userProfileModel!.about ?? '',
-//     style: AppText.fontSizeNormalTextStyle,
-//   ),
-// ),
+

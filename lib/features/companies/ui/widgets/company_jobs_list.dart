@@ -1,75 +1,33 @@
 
 
 
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:wazzifni_admin/core/common/style/gaps.dart';
-import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
-import 'package:wazzifni_admin/core/constants/appcolors.dart';
-import 'package:wazzifni_admin/core/utils/utils.dart';
-import 'package:wazzifni_admin/core/widgets/custom_widgets/custom_dropdown.dart';
-import 'package:wazzifni_admin/features/jobs/ui/widgets/job_card.dart';
-import 'package:wazzifni_admin/features/users/ui/widgets/user_widget.dart';
-import '../../../core/common/models/cities_response.dart';
-import '../../../core/common/models/company_model.dart';
-import '../../../core/common/models/dropdown_model.dart';
-import '../../../core/common/models/enums.dart';
-import '../../../core/common/models/job_model.dart';
-import '../../../core/constants/app_textStyle.dart';
-import '../../../core/widgets/custom_widgets/custom_textfield.dart';
 
-class JobsScreen extends StatefulWidget {
-  const JobsScreen({super.key});
+import '../../../../core/common/models/cities_response.dart';
+import '../../../../core/common/models/company_model.dart';
+import '../../../../core/common/models/enums.dart';
+import '../../../../core/common/models/job_model.dart';
+import '../../../../core/common/style/gaps.dart';
+import '../../../../core/common/style/padding_insets.dart';
+import '../../../../core/constants/app_textStyle.dart';
+import '../../../../core/constants/appcolors.dart';
+import '../../../../core/utils/utils.dart';
+import '../../../../core/widgets/custom_widgets/custom_textfield.dart';
+import '../../../jobs/ui/widgets/job_card.dart';
 
-  @override
-  State<JobsScreen> createState() => _JobsScreenState();
-}
 
-class _JobsScreenState extends State<JobsScreen> {
+class CompanyJobsWidget extends StatelessWidget {
+  CompanyJobsWidget({
+    super.key,
+  });
+
   TextEditingController controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: 65,
-          padding: PaddingInsets.cardPaddingHV,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            boxShadow: AppColors.boxShadow2,
-          ),
-          child: Row(
-            children: [
-              SizedBox(
-                width: 150,
-                child: CustomDropdown(
-                  labelText: "city".tr(),
-                  items: [
-                    DropDownItem(id: 0, name: 'بغداد'),
-                    DropDownItem(id: 1, name: 'النجف'),
-                    DropDownItem(id: 2, name: 'اربيل'),
-                  ],
-                  onChanged: (value) {},
-                ),
-              ),
-              Gaps.hGap1,
-              SizedBox(
-                width: 150,
-                child: CustomDropdown(
-                  labelText: "status".tr(),
-                  items: [
-                    DropDownItem(id: 0, name: 'pending'.tr()),
-                    DropDownItem(id: 1, name: 'approved'.tr()),
-                    DropDownItem(id: 2, name: 'rejected'.tr()),
-                  ],
-                  onChanged: (value) {},
-                ),
-              ),
-            ],
-          ),
-        ),
         Padding(
           padding: PaddingInsets.bigPaddingAll,
           child: Row(
@@ -112,7 +70,7 @@ class _JobsScreenState extends State<JobsScreen> {
         Expanded(
           child: Container(
             padding: PaddingInsets.bigPaddingAll,
-            margin: PaddingInsets.bigPaddingAll,
+            margin: PaddingInsets.normalPaddingAll,
             decoration: BoxDecoration(
               color: AppColors.white,
               boxShadow: AppColors.boxShadow2,
@@ -128,7 +86,7 @@ class _JobsScreenState extends State<JobsScreen> {
                     maxSalary: 1000,
                     company: Company(
                       city: CityModel(
-                        name: 'بغداد'
+                          name: 'بغداد'
                       ),
                     ),
                     creationTime: DateTime.now(),
@@ -137,7 +95,6 @@ class _JobsScreenState extends State<JobsScreen> {
                     educationLevel: EducationLevel.high_school.value,
                   ),
                 ));
-
                 return ListView.builder(
                   itemCount: (items.length / itemsPerRow).ceil(),
                   itemBuilder: (context, rowIndex) {
@@ -165,7 +122,3 @@ class _JobsScreenState extends State<JobsScreen> {
     );
   }
 }
-
-
-
-

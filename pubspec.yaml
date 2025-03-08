@@ -121,7 +121,6 @@ flutter:
     - assets/lang/
     - assets/images/
     - assets/icons/
-    - assets/icons/navigation_bar/
     - assets/icons/profile/
     - assets/icons/home/
     - assets/icons/settings/

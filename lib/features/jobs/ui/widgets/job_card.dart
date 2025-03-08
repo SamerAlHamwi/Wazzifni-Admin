@@ -35,7 +35,7 @@ class _JobCardWidgetState extends State<JobCardWidget> {
             // }
           },
           child: Container(
-            width: widget.width ?? 260,
+            width: widget.width ?? 270,
             padding: const EdgeInsets.all(1),
             margin: PaddingInsets.normalPaddingAll,
             decoration: BoxDecoration(
