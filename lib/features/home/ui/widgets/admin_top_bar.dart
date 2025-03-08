@@ -39,11 +39,14 @@ class AdminTopBar extends StatelessWidget {
                 width: 2,
               )
             ),
-            child: IconButton(
-                onPressed: (){},
-                icon: Icon(
-                  Icons.notifications_active_outlined,
-                  color: AppColors.black.withOpacity(0.5),
+            child: GestureDetector(
+                onTap: (){},
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Image.asset(
+                    AppAssets.notifications,
+                    color: AppColors.primaryColor,
+                  ),
                 )
             ),
           )

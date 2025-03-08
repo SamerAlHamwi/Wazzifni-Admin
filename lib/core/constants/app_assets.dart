@@ -37,11 +37,6 @@ class AppAssets {
   static const companyLogo = 'assets/icons/settings/company-logo.png';
   static const editSvg = 'assets/icons/settings/Edit.svg';
 
-  ///Drawer
-  static const myRequests = 'assets/icons/drawer/my_requests.png';
-  static const privacyPolicy = 'assets/icons/drawer/privacy_policy.png';
-  static const setting = 'assets/icons/drawer/setting.png';
-
   ///Images
   static const image = 'assets/images/image.png';
   static const cover = 'assets/images/cover.png';
@@ -56,6 +51,12 @@ class AppAssets {
   static const filter = 'assets/icons/home/filter.png';
   static const bookmark = 'assets/icons/home/bookmark.png';
   static const notifications = 'assets/icons/home/notifications.png';
+  static const myRequests = 'assets/icons/home/my_requests.png';
+  static const privacyPolicy = 'assets/icons/home/privacy_policy.png';
+  static const setting = 'assets/icons/home/setting.png';
+  static const dashboard = 'assets/icons/home/dashboard.png';
+  static const users = 'assets/icons/home/users.png';
+  static const companies = 'assets/icons/home/companies.png';
 
   ///Navigation Icons
   static const homeNav = 'assets/icons/navigation_bar/home-icon.svg';
