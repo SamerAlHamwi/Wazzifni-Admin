@@ -37,6 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return BackgroundPage(
       body: SingleChildScrollView(
         child: Container(
+          width: 400,
           padding: PaddingInsets.extraBigPaddingAll,
           margin: PaddingInsets.extraBigPaddingAll,
           decoration: BoxDecoration(

@@ -10,7 +10,9 @@ import '../../companies/ui/companies_screen.dart';
 import '../../companies/ui/company_details_screen.dart';
 import '../../jobs/ui/jobs_screen.dart';
 import '../../notifications/ui/notifications_screen.dart';
+import '../../publish_job/ui/publish_job_screen.dart';
 import '../../users/ui/users_screen.dart';
+import 'home_screen.dart';
 
 
 class AdminHomePage extends StatelessWidget {
@@ -32,7 +34,7 @@ class AdminHomePage extends StatelessWidget {
                   children: [
                     AdminTopBar(isSmallScreen: isSmallScreen),
                     Expanded(
-                      child: CompanyDetailsScreen(companyId: 1,)
+                      child: HomeScreen()
                     ),
                   ],
                 ),

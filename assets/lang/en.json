@@ -160,6 +160,12 @@
     "companies": "Companies",
     "users": "Users",
     "dashboard": "Dashboard",
-    "search_hint": "Search using name or mobile number"
+    "search_hint": "Search using name or mobile number",
+    "latest_users": "Latest users",
+    "latest_jobs": "Latest jobs",
+    "today_users": "Today users",
+    "today_jobs": "Today jobs",
+    "paid_jobs": "Paid jobs",
+    "users_found_job": "Approved users"
 
 }

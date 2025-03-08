@@ -30,7 +30,7 @@ class UserWidget extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          Gaps.hGap2,
+          Gaps.hGap1,
           SizedBox(
             width: 125,
             child: Column(

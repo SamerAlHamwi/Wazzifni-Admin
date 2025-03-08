@@ -57,6 +57,10 @@ class AppAssets {
   static const dashboard = 'assets/icons/home/dashboard.png';
   static const users = 'assets/icons/home/users.png';
   static const companies = 'assets/icons/home/companies.png';
+  static const employees = 'assets/icons/home/employees.png';
+  static const jobs = 'assets/icons/home/jobs.png';
+  static const paid = 'assets/icons/home/paid.png';
+  static const featured = 'assets/icons/home/featured.png';
 
   ///Navigation Icons
   static const homeNav = 'assets/icons/navigation_bar/home-icon.svg';

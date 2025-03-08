@@ -20,13 +20,13 @@ class CompanyInfoBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 28.w,
+      width: 125,
       height: iconPath.isNotEmpty ? 100 : 65,
       padding: PaddingInsets.normalPaddingAll,
       decoration: BoxDecoration(
         color: AppColors.white,
         borderRadius: BorderRadius.circular(8),
-        boxShadow: AppColors.boxShadow,
+        boxShadow: AppColors.boxShadow2,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,

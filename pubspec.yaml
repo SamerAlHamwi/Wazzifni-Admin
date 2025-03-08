@@ -45,6 +45,7 @@ dependencies:
   animated_snack_bar: ^0.4.0
   awesome_dialog: ^3.2.1
   fluttertoast:
+  fl_chart: ^0.70.2
 
 
 
@@ -128,13 +129,6 @@ flutter:
   fonts:
     - family: Tajawal
       fonts:
-        - asset: assets/fonts/Tajawal-Black.ttf
-        - asset: assets/fonts/Tajawal-Bold.ttf
-        - asset: assets/fonts/Tajawal-ExtraBold.ttf
-        - asset: assets/fonts/Tajawal-ExtraLight.ttf
-        - asset: assets/fonts/Tajawal-Light.ttf
-        - asset: assets/fonts/Tajawal-Medium.ttf
-
         - asset: assets/fonts/Cairo-Black.ttf
         - asset: assets/fonts/Cairo-Bold.ttf
         - asset: assets/fonts/Cairo-ExtraBold.ttf

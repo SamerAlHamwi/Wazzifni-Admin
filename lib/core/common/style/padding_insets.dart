@@ -18,6 +18,6 @@ class PaddingInsets {
 
   static const normalPaddingHV = EdgeInsets.symmetric(horizontal: 8,vertical: 4);
   static const cardPaddingHV = EdgeInsets.symmetric(horizontal: 12,vertical: 6);
-  static const bigPaddingHV = EdgeInsets.symmetric(horizontal: 24,vertical: 6);
+  static const bigPaddingHV = EdgeInsets.symmetric(horizontal: 16,vertical: 6);
   static const profileCardPaddingHV = EdgeInsets.symmetric(horizontal: 8,vertical: 16);
 }
