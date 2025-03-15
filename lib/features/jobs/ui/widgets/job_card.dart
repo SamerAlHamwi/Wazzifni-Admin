@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/common/models/job_model.dart';
 import '../../../../../core/common/style/gaps.dart';
 import '../../../../../core/common/style/padding_insets.dart';
@@ -30,9 +31,9 @@ class _JobCardWidgetState extends State<JobCardWidget> {
         ? const SizedBox()
         : GestureDetector(
           onTap: () {
-            // if(widget.jobModel != null){
-            //   Navigation.push(CompanyJobDetails(id: widget.jobModel!.id!,isFromCompany: widget.isFromCompany,));
-            // }
+            if(widget.jobModel != null){
+              context.go('/add-job', extra: widget.jobModel);
+            }
           },
           child: Container(
             width: widget.width ?? 270,

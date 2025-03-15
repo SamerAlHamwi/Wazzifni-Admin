@@ -1,6 +1,3 @@
-
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -16,11 +13,8 @@ import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../../../jobs/ui/widgets/job_card.dart';
 
-
 class CompanyJobsWidget extends StatelessWidget {
-  CompanyJobsWidget({
-    super.key,
-  });
+  CompanyJobsWidget({super.key});
 
   TextEditingController controller = TextEditingController();
 
@@ -78,23 +72,25 @@ class CompanyJobsWidget extends StatelessWidget {
             ),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                int itemsPerRow = Utils.calculateRowItemsCount(constraints, 290);
-                List<Widget> items = List.generate(20, (index) => JobCardWidget(
-                  jobModel: JobModel(
-                    title: 'مبرمج تطبيقات موبايل',
-                    minSalary: 1000,
-                    maxSalary: 1000,
-                    company: Company(
-                      city: CityModel(
-                          name: 'بغداد'
-                      ),
+                int itemsPerRow = Utils.calculateRowItemsCount(
+                  constraints,
+                  290,
+                );
+                List<Widget> items = List.generate(
+                  20,
+                  (index) => JobCardWidget(
+                    jobModel: JobModel(
+                      title: 'مبرمج تطبيقات موبايل',
+                      minSalary: 1000,
+                      maxSalary: 1000,
+                      company: Company(city: CityModel(name: 'بغداد')),
+                      creationTime: DateTime.now(),
+                      workLevel: WorkLevel.manager.value,
+                      workEngagement: WorkEngagement.full_time.value,
+                      educationLevel: EducationLevel.high_school.value,
                     ),
-                    creationTime: DateTime.now(),
-                    workLevel: WorkLevel.manager.value,
-                    workEngagement: WorkEngagement.full_time.value,
-                    educationLevel: EducationLevel.high_school.value,
                   ),
-                ));
+                );
                 return ListView.builder(
                   itemCount: (items.length / itemsPerRow).ceil(),
                   itemBuilder: (context, rowIndex) {

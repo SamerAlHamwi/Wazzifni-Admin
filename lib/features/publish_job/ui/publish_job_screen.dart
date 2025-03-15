@@ -61,9 +61,9 @@ class _AddJobScreenState extends State<AddJobScreen> {
     if(widget.jobModel != null){
       jobName.text = widget.jobModel!.title ?? '';
       jobDescription.text = widget.jobModel!.description ?? '';
-      jobType = WorkEngagement.values.where((element) => element.index == widget.jobModel!.workEngagement).first.name;
-      workLevel = WorkLevel.values.where((element) => element.index == widget.jobModel!.workLevel).first.name;
-      workPlace = WorkPlace.values.where((element) => element.index == widget.jobModel!.workPlace).first.name;
+      jobType = WorkEngagement.values.where((element) => element.value == widget.jobModel!.workEngagement).first.name;
+      workLevel = WorkLevel.values.where((element) => element.value == widget.jobModel!.workLevel).first.name;
+      workPlace = WorkPlace.values.where((element) => element.value == widget.jobModel!.workPlace).first.name;
       experience = widget.jobModel!.experienceYearsCount!.toDouble();
       employeesCount = widget.jobModel!.requiredEmployeesCount!.toDouble();
       educationLevel = EducationLevel.values.where((element) => element.value == widget.jobModel!.educationLevel).first.name;

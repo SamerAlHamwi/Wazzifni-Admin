@@ -21,7 +21,7 @@ class CompanyInfoBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 125,
-      height: iconPath.isNotEmpty ? 100 : 65,
+      height: iconPath.isNotEmpty ? 100 : 70,
       padding: PaddingInsets.normalPaddingAll,
       decoration: BoxDecoration(
         color: AppColors.white,
@@ -41,6 +41,8 @@ class CompanyInfoBox extends StatelessWidget {
           Gaps.vGap2,
           Text(
             title,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppText.fontSizeSmallTextStyle.copyWith(
               color: AppColors.primaryColor,
             ),

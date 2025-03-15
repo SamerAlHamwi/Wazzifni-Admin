@@ -8,75 +8,51 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:wazzifni_admin/router.dart';
 import 'core/constants/AppTheme.dart';
-import 'core/constants/Keys.dart';
-import 'core/constants/app_settings.dart';
 import 'core/utils/storage/storage.dart';
-import 'features/login/ui/login_screen.dart';
+
 
 
 void main() async {
   HttpOverrides.global = MyHttpOverrides();
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
-  // DartPluginRegistrant.ensureInitialized();
-
-  // await Permission.notification.isDenied.then((value) {
-  //   if (value) {
-  //     Permission.notification.request();
-  //   }
-  // });
 
   await SharedStorage.init();
 
   runApp(
     Phoenix(
       child: EasyLocalization(
-        startLocale: LANGUAGES['ar'],
-        supportedLocales: LANGUAGES.values.toList(),
+        fallbackLocale: Locale('ar'),
+        supportedLocales: [Locale('ar'),Locale('en')],
         path: "assets/lang",
-        child: const Responsive(),
+        child: ScreenUtilInit(
+          minTextAdapt: true,
+          splitScreenMode: true,
+          designSize: const Size(100, 100),
+          builder: (context, child) => const MyApp(),
+        ),
       ),
     ),
   );
 }
-
-class Responsive extends StatelessWidget {
-  const Responsive({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return EasyLocalization(
-      startLocale: LANGUAGES['ar'],
-      supportedLocales: LANGUAGES.values.toList(),
-      path: "assets/lang",
-      child: ScreenUtilInit(
-        minTextAdapt: true,
-        splitScreenMode: true,
-        designSize: const Size(100, 100),
-        builder: (context, child) => const MyApp(),
-      ),
-    );
-  }
-}
-
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: router,
       builder: EasyLoading.init(),
       scrollBehavior: MyCustomScrollBehavior(),
-      navigatorKey: Keys.navigatorKey,
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'Wazzifni Admin',
       theme: AppTheme.theme,
-      home: const LoginScreen(),
     );
   }
 }
@@ -98,3 +74,11 @@ class MyCustomScrollBehavior extends MaterialScrollBehavior {
         PointerDeviceKind.mouse,
       };
 }
+
+// DartPluginRegistrant.ensureInitialized();
+
+// await Permission.notification.isDenied.then((value) {
+//   if (value) {
+//     Permission.notification.request();
+//   }
+// });

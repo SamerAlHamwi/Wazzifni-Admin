@@ -4,7 +4,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wazzifni_admin/core/common/style/gaps.dart';
-
+import 'package:go_router/go_router.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_textStyle.dart';
 import '../../../../core/constants/appcolors.dart';
@@ -27,25 +27,46 @@ class AdminSidebar extends StatelessWidget {
           Gaps.vGap4,
           Center(child: Image.asset(AppAssets.logo, height: 60)),
           Gaps.vGap4,
-          _buildSidebarItem(AppAssets.dashboard, "dashboard".tr()),
-          _buildSidebarItem(AppAssets.job, "jobs".tr()),
-          _buildSidebarItem(AppAssets.myRequests, "job_applications".tr()),
-          _buildSidebarItem(AppAssets.users, "users".tr()),
-          _buildSidebarItem(AppAssets.companies, "companies".tr()),
+          _buildSidebarItem(0, AppAssets.dashboard, "dashboard".tr(),context),
+          _buildSidebarItem(1, AppAssets.job, "jobs".tr(),context),
+          _buildSidebarItem(2, AppAssets.myRequests, "job_applications".tr(),context),
+          _buildSidebarItem(3, AppAssets.users, "users".tr(),context),
+          _buildSidebarItem(4, AppAssets.companies, "companies".tr(),context),
         ],
       ),
     );
   }
 
-  Widget _buildSidebarItem(String icon, String label) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      child: Row(
-        children: [
-          Image.asset(icon,width: 28,height: 28,),
-          Gaps.hGap2,
-          Text(label, style: AppText.fontSizeMediumTextStyle),
-        ],
+  Widget _buildSidebarItem(int type, String icon, String label,BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        switch(type){
+          case 0:
+            context.go('/home');
+            break;
+          case 1:
+            context.go('/jobs');
+            break;
+          case 2:
+
+            break;
+          case 3:
+            context.go('/users');
+            break;
+          case 4:
+            context.go('/companies');
+            break;
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+        child: Row(
+          children: [
+            Image.asset(icon,width: 28,height: 28,),
+            Gaps.hGap2,
+            Text(label, style: AppText.fontSizeMediumTextStyle),
+          ],
+        ),
       ),
     );
   }

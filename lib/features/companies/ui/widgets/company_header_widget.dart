@@ -44,7 +44,8 @@ class _CompanyHeaderWidgetState extends State<CompanyHeaderWidget> {
                   left: 10,
                   top: 10,
                   child: CustomButton(
-                    width: 150,
+                    width: 120,
+                    height: 35,
                     isSecondaryGradient: true,
                     text: 'approved'.tr(),
                     onTap: () {
@@ -62,7 +63,7 @@ class _CompanyHeaderWidgetState extends State<CompanyHeaderWidget> {
           left: 0,
           right: 0,
           child: Container(
-            height: 80,
+            height: 82,
             width: double.infinity,
             padding: PaddingInsets.bigPaddingAll,
             decoration: BoxDecoration(

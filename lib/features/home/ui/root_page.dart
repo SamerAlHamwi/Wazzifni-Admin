@@ -1,22 +1,15 @@
 
 
 import 'package:flutter/material.dart';
-import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
 import 'package:wazzifni_admin/features/home/ui/widgets/admin_sidebar.dart';
 import 'package:wazzifni_admin/features/home/ui/widgets/admin_top_bar.dart';
 
-import '../../companies/ui/companies_screen.dart';
-import '../../companies/ui/company_details_screen.dart';
-import '../../jobs/ui/jobs_screen.dart';
-import '../../notifications/ui/notifications_screen.dart';
-import '../../publish_job/ui/publish_job_screen.dart';
-import '../../users/ui/users_screen.dart';
-import 'home_screen.dart';
-
 
 class AdminHomePage extends StatelessWidget {
-  const AdminHomePage({super.key});
+  const AdminHomePage({super.key, required this.child});
+
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +27,7 @@ class AdminHomePage extends StatelessWidget {
                   children: [
                     AdminTopBar(isSmallScreen: isSmallScreen),
                     Expanded(
-                      child: HomeScreen()
+                      child: child,
                     ),
                   ],
                 ),

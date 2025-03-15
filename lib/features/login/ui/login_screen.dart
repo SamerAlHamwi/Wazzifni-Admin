@@ -3,21 +3,18 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/boilerplate/create_model/cubits/create_model_cubit.dart';
-import '../../../../../core/common/models/enums.dart';
-import '../../../../../core/constants/Validators.dart';
 import '../../../../../core/constants/app_assets.dart';
 import '../../../../../core/constants/app_textStyle.dart';
-import '../../../../../core/utils/utils.dart';
 import '../../../../../core/widgets/custom_widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../../../../../core/widgets/pages/background_page.dart';
-import '../../../core/boilerplate/create_model/widgets/create_model.dart';
 import '../../../core/common/style/gaps.dart';
 import '../../../core/common/style/padding_insets.dart';
 import '../../../core/constants/appcolors.dart';
 import '../../../core/utils/Navigation/Navigation.dart';
-import '../../home/ui/root_page.dart';
+import '../../home/ui/home_screen.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -126,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomButton(
                   text: 'login'.tr(),
                   onTap: () {
-                    Navigation.push(AdminHomePage());
+                    context.go('/home');
                   },
                 ),
                 Gaps.vGap2,

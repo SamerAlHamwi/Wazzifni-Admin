@@ -1,6 +1,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/home/ui/widgets/home_latest_jobs.dart';
 import 'package:wazzifni_admin/features/home/ui/widgets/home_latest_users.dart';
 import 'package:wazzifni_admin/features/home/ui/widgets/home_statistics_widget.dart';
@@ -20,15 +21,17 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          JobApplicationsChart(),
-          HomeStatistics(),
-          HomeLatestJobs(),
-          HomeLatestUsers(),
-          Gaps.vGap2,
-        ],
+    return AdminHomePage(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            JobApplicationsChart(),
+            HomeStatistics(),
+            HomeLatestJobs(),
+            HomeLatestUsers(),
+            Gaps.vGap2,
+          ],
+        ),
       ),
     );
   }
