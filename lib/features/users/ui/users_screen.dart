@@ -9,9 +9,14 @@ import 'package:wazzifni_admin/core/utils/utils.dart';
 import 'package:wazzifni_admin/core/widgets/custom_widgets/custom_dropdown.dart';
 import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/users/ui/widgets/user_widget.dart';
+import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
+import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
 import '../../../core/common/models/dropdown_model.dart';
+import '../../../core/common/models/profile_model.dart';
 import '../../../core/constants/app_textStyle.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
+import '../data/repository/user_repository.dart';
+import '../data/use_case/get_users_use_case.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -22,6 +27,7 @@ class UsersScreen extends StatefulWidget {
 
 class _UsersScreenState extends State<UsersScreen> {
   TextEditingController controller = TextEditingController();
+  late PaginationCubit usersCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -113,31 +119,46 @@ class _UsersScreenState extends State<UsersScreen> {
                 boxShadow: AppColors.boxShadow2,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  int itemsPerRow = Utils.calculateRowItemsCount(constraints, 216);
-                  List<Widget> items = List.generate(20, (index) => UserWidget());
-
-                  return ListView.builder(
-                    itemCount: (items.length / itemsPerRow).ceil(),
-                    itemBuilder: (context, rowIndex) {
-                      int startIndex = rowIndex * itemsPerRow;
-                      int endIndex = (startIndex + itemsPerRow).clamp(
-                        0,
-                        items.length,
-                      );
-                      List<Widget> rowItems = items.sublist(startIndex, endIndex);
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: rowItems,
-                        ),
-                      );
-                    },
+              child: PaginationList<UserProfileModel>(
+                paddingTextErrorWidget: 4,
+                onCubitCreated: (cubit) => usersCubit = cubit,
+                repositoryCallBack: (model) {
+                  return GetUsersUseCase(UserRepository())
+                      .call(params: GetUsersParams(
+                    request: model,
+                  ),
                   );
                 },
+                listBuilder: (list) {
+                  return
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        int itemsPerRow = Utils.calculateRowItemsCount(constraints, 216);
+                        List<Widget> items = List.generate(list.length, (index) => UserWidget(userProfileModel: list[index],));
+
+                        return ListView.builder(
+                          itemCount: (items.length / itemsPerRow).ceil(),
+                          itemBuilder: (context, rowIndex) {
+                            int startIndex = rowIndex * itemsPerRow;
+                            int endIndex = (startIndex + itemsPerRow).clamp(
+                              0,
+                              items.length,
+                            );
+                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: rowItems,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                },
+                withPagination: false,
               ),
             ),
           ),

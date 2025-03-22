@@ -10,6 +10,9 @@ import 'package:wazzifni_admin/core/utils/utils.dart';
 import 'package:wazzifni_admin/core/widgets/custom_widgets/custom_dropdown.dart';
 import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/jobs/ui/widgets/job_card.dart';
+import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
+import '../../../core/boilerplate/pagination/models/get_list_request.dart';
+import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
 import '../../../core/common/models/cities_response.dart';
 import '../../../core/common/models/company_model.dart';
 import '../../../core/common/models/dropdown_model.dart';
@@ -17,6 +20,9 @@ import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/job_model.dart';
 import '../../../core/constants/app_textStyle.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
+import '../../companies/data/repository/company_repository.dart';
+import '../data/repository/job_repository.dart';
+import '../data/use_case/get_jobs_use_case.dart';
 
 class JobsScreen extends StatefulWidget {
   const JobsScreen({super.key});
@@ -27,6 +33,11 @@ class JobsScreen extends StatefulWidget {
 
 class _JobsScreenState extends State<JobsScreen> {
   TextEditingController controller = TextEditingController();
+  late PaginationCubit jobsCubit;
+  GetJobsParams params = GetJobsParams(
+    isIApply: false,
+    request: GetListRequest(),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -118,46 +129,49 @@ class _JobsScreenState extends State<JobsScreen> {
                 boxShadow: AppColors.boxShadow2,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: LayoutBuilder(
-                builder: (context, constraints) {
-                  int itemsPerRow = Utils.calculateRowItemsCount(constraints, 290);
-                  List<Widget> items = List.generate(20, (index) => JobCardWidget(
-                    jobModel: JobModel(
-                      title: 'مبرمج تطبيقات موبايل',
-                      minSalary: 1000,
-                      maxSalary: 1000,
-                      company: Company(
-                        city: CityModel(
-                          name: 'بغداد'
-                        ),
-                      ),
-                      creationTime: DateTime.now(),
-                      workLevel: WorkLevel.manager.value,
-                      workEngagement: WorkEngagement.full_time.value,
-                      educationLevel: EducationLevel.high_school.value,
+              child: PaginationList<JobModel>(
+                paddingTextErrorWidget: 4,
+                onCubitCreated: (cubit) => jobsCubit = cubit,
+                repositoryCallBack: (model) {
+                  return GetJobsListUseCase(JobsRepository())
+                      .call(
+                    params: params.copyWith(
+                      request: model,
                     ),
-                  ));
-
-                  return ListView.builder(
-                    itemCount: (items.length / itemsPerRow).ceil(),
-                    itemBuilder: (context, rowIndex) {
-                      int startIndex = rowIndex * itemsPerRow;
-                      int endIndex = (startIndex + itemsPerRow).clamp(
-                        0,
-                        items.length,
-                      );
-                      List<Widget> rowItems = items.sublist(startIndex, endIndex);
-
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: rowItems,
-                        ),
-                      );
-                    },
                   );
                 },
+                listBuilder: (list) {
+                  return
+                    LayoutBuilder(
+                      builder: (context, constraints) {
+                        int itemsPerRow = Utils.calculateRowItemsCount(constraints, 290);
+                        List<Widget> items = List.generate(list.length, (index) => JobCardWidget(
+                          jobModel: list[index]
+                        ));
+
+                        return ListView.builder(
+                          itemCount: (items.length / itemsPerRow).ceil(),
+                          itemBuilder: (context, rowIndex) {
+                            int startIndex = rowIndex * itemsPerRow;
+                            int endIndex = (startIndex + itemsPerRow).clamp(
+                              0,
+                              items.length,
+                            );
+                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
+
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: rowItems,
+                              ),
+                            );
+                          },
+                        );
+                      },
+                    );
+                },
+                withPagination: false,
               ),
             ),
           ),

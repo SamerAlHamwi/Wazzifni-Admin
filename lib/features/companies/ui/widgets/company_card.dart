@@ -3,22 +3,26 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wazzifni_admin/core/common/models/company_model.dart';
 
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/common/style/padding_insets.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../../core/constants/app_textStyle.dart';
 import '../../../../core/constants/appcolors.dart';
+import '../../../../core/widgets/image_widgets/custom_image.dart';
 
 
 class CompanyCard extends StatelessWidget {
-  const CompanyCard({super.key});
+  const CompanyCard({super.key, required this.company});
+
+  final Company company;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: (){
-        context.go('/company-details/5');
+        context.go('/company-details/${company.id}');
       },
       child: Container(
         width: 150,
@@ -32,10 +36,14 @@ class CompanyCard extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset(AppAssets.logo, width: 50, height: 50),
+            CustomImage.circular(
+              radius: 50,
+              isNetworkImage: true,
+              image: company.profile?.url,
+            ),
             Spacer(),
             Text(
-              'شركة المستقبل',
+              company.name ?? '',
               maxLines: 2,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
@@ -44,7 +52,7 @@ class CompanyCard extends StatelessWidget {
               ),
             ),
             Gaps.vGap1,
-            Text('بغداد', style: AppText.fontSizeNormalTextStyle),
+            Text(company.city?.name ?? '', style: AppText.fontSizeNormalTextStyle),
           ],
         ),
       ),

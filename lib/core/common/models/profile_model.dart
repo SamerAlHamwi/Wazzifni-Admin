@@ -13,6 +13,41 @@ import 'award_model.dart';
 import 'cities_response.dart';
 import 'education_model.dart';
 
+class UserListResponse extends ApiResponse<UserListModel> {
+  UserListResponse({super.errors, required bool super.success, required super.data});
+  factory UserListResponse.fromJson(Map<String, dynamic> json) {
+    return UserListResponse(
+        errors: json['error'],
+        data: UserListModel.fromJson(json['result']),
+        success: json['success']
+    );
+  }
+}
+
+
+class UserListModel extends BaseModel {
+  int? totalCount;
+  List<UserProfileModel>? items;
+
+  UserListModel({
+    this.totalCount,
+    this.items,
+  });
+
+  UserListModel.fromJson(Map<String, dynamic> json) {
+    totalCount = json['totalCount'] as int?;
+    items = (json['items'] as List?)?.map((dynamic e) => UserProfileModel.fromJson(e as Map<String,dynamic>)).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['totalCount'] = totalCount;
+    json['items'] = items?.map((e) => e.toJson()).toList();
+    return json;
+  }
+}
+
+
 class UserProfileResponse extends ApiResponse<UserProfileModel> {
   UserProfileResponse({super.errors, required bool super.success, required super.data});
   factory UserProfileResponse.fromJson(Map<String, dynamic> json) {

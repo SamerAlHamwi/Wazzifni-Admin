@@ -5,6 +5,7 @@ import 'core/common/models/job_model.dart';
 import 'features/companies/ui/companies_screen.dart';
 import 'features/companies/ui/company_details_screen.dart';
 import 'features/home/ui/home_screen.dart';
+import 'features/job_applications/ui/job_applications_screen.dart';
 import 'features/jobs/ui/jobs_screen.dart';
 import 'features/login/ui/login_screen.dart';
 import 'features/notifications/ui/notifications_screen.dart';
@@ -40,6 +41,10 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/jobs',
       builder: (context, state) => const JobsScreen(),
+    ),
+    GoRoute(
+      path: '/job-applications',
+      builder: (context, state) => const JobApplicationsScreen(),
     ),
     GoRoute(
       path: '/add-job',

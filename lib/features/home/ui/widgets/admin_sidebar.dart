@@ -48,7 +48,7 @@ class AdminSidebar extends StatelessWidget {
             context.go('/jobs');
             break;
           case 2:
-
+            context.go('/job-applications');
             break;
           case 3:
             context.go('/users');

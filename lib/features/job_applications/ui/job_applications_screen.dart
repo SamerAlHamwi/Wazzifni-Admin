@@ -1,33 +1,36 @@
 
 
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:wazzifni_admin/core/common/models/company_model.dart';
 import 'package:wazzifni_admin/core/common/style/gaps.dart';
 import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
 import 'package:wazzifni_admin/core/utils/utils.dart';
 import 'package:wazzifni_admin/core/widgets/custom_widgets/custom_dropdown.dart';
-import 'package:wazzifni_admin/features/companies/ui/widgets/company_card.dart';
 import 'package:wazzifni_admin/features/home/ui/root_page.dart';
+import 'package:wazzifni_admin/features/job_applications/ui/widgets/user_apply_card.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
 import '../../../core/common/models/dropdown_model.dart';
+import '../../../core/common/models/job_application_model.dart';
 import '../../../core/constants/app_textStyle.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
-import '../data/repository/company_repository.dart';
-import '../data/use_case/get_companies_use_case.dart';
+import '../data/repository/job_application_repository.dart';
+import '../data/use_case/get_applications_job_use_case.dart';
 
-class CompaniesScreen extends StatefulWidget {
-  const CompaniesScreen({super.key});
+
+
+class JobApplicationsScreen extends StatefulWidget {
+  const JobApplicationsScreen({super.key});
 
   @override
-  State<CompaniesScreen> createState() => _CompaniesScreenState();
+  State<JobApplicationsScreen> createState() => _JobsScreenState();
 }
 
-class _CompaniesScreenState extends State<CompaniesScreen> {
+class _JobsScreenState extends State<JobApplicationsScreen> {
   TextEditingController controller = TextEditingController();
-  late PaginationCubit companiesCubit;
+  late PaginationCubit jobsCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +94,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                     ),
                     child: Center(
                       child: Text(
-                        'companies'.tr(),
+                        'job_applications'.tr(),
                         style: AppText.fontSizeNormalTextStyle.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -119,12 +122,13 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                 boxShadow: AppColors.boxShadow2,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: PaginationList<Company>(
+              child: PaginationList<JobApplicationModel>(
                 paddingTextErrorWidget: 4,
-                onCubitCreated: (cubit) => companiesCubit = cubit,
+                onCubitCreated: (cubit) => jobsCubit = cubit,
                 repositoryCallBack: (model) {
-                  return GetCompaniesUseCase(CompanyRepository())
-                      .call(params: GetCompaniesParams(
+                  return GetApplicationJobsListUseCase(JobApplicationRepository())
+                      .call(
+                    params: GetApplicationJobsParams(
                       request: model,
                     ),
                   );
@@ -133,8 +137,11 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                   return
                     LayoutBuilder(
                       builder: (context, constraints) {
-                        int itemsPerRow = Utils.calculateRowItemsCount(constraints, 160);
-                        List<Widget> items = List.generate(list.length, (index) => CompanyCard(company: list[index],));
+                        int itemsPerRow = Utils.calculateRowItemsCount(constraints, 275);
+                        List<Widget> items = List.generate(list.length, (index) => UserApplyCard(
+                            jobApplicationModel: list[index],
+                            onDelete: (){},
+                        ));
 
                         return ListView.builder(
                           itemCount: (items.length / itemsPerRow).ceil(),

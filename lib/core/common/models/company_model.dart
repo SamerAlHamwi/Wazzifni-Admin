@@ -9,6 +9,39 @@ import 'attachment_model.dart';
 import 'cities_response.dart';
 import 'user_model.dart';
 
+class CompanyListResponse extends ApiResponse<CompanyListModel> {
+  CompanyListResponse({super.errors, required bool super.success, required super.data});
+  factory CompanyListResponse.fromJson(Map<String, dynamic> json) {
+    return CompanyListResponse(
+        errors: json['error'],
+        data: CompanyListModel.fromJson(json['result']),
+        success: json['success']
+    );
+  }
+}
+
+class CompanyListModel extends BaseModel {
+  int? totalCount;
+  List<Company>? items;
+
+  CompanyListModel({
+    this.totalCount,
+    this.items,
+  });
+
+  CompanyListModel.fromJson(Map<String, dynamic> json) {
+    totalCount = json['totalCount'] as int?;
+    items = (json['items'] as List?)?.map((dynamic e) => Company.fromJson(e as Map<String,dynamic>)).toList();
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> json = <String, dynamic>{};
+    json['totalCount'] = totalCount;
+    json['items'] = items?.map((e) => e.toJson()).toList();
+    return json;
+  }
+}
+
 class CompanyDetailsResponse extends ApiResponse<Company> {
   CompanyDetailsResponse({super.errors, required bool super.success, required super.data});
   factory CompanyDetailsResponse.fromJson(Map<String, dynamic> json) {

@@ -31,7 +31,7 @@ class PaginationList<Model> extends StatefulWidget {
   Widget titleWidget;
 
   PaginationList(
-      {Key? key,
+      {super.key,
       this.noDataWidget,
       this.physics,
       this.paddingTextErrorWidget,
@@ -50,8 +50,7 @@ class PaginationList<Model> extends StatefulWidget {
       this.withEmptyWidget = true,
       this.onRefresh,
       this.height,
-      })
-      : super(key: key);
+      });
 
   @override
   _PaginationListState<Model> createState() => _PaginationListState<Model>();

@@ -1,5 +1,6 @@
 
 
+import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,11 +11,14 @@ import '../../../../../core/constants/app_textStyle.dart';
 import '../../../../../core/widgets/custom_widgets/custom_button.dart';
 import '../../../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../../../../../core/widgets/pages/background_page.dart';
+import '../../../core/boilerplate/create_model/widgets/create_model.dart';
 import '../../../core/common/style/gaps.dart';
 import '../../../core/common/style/padding_insets.dart';
+import '../../../core/constants/Validators.dart';
 import '../../../core/constants/appcolors.dart';
-import '../../../core/utils/Navigation/Navigation.dart';
-import '../../home/ui/home_screen.dart';
+import '../data/model/login_model.dart';
+import '../data/repository/auth_repository.dart';
+import '../data/use_case/login_use_case.dart';
 
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +30,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController controller = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   late CreateModelCubit loginCubit;
   final _formKey = GlobalKey<FormState>();
 
@@ -70,61 +75,43 @@ class _LoginScreenState extends State<LoginScreen> {
                       controller: controller,
                       keyboardType: TextInputType.phone,
                       labelText: 'user_name'.tr(),
+                    validator: Validators.validateEmptyValue,
                   ),
                 ),
                 Gaps.vGap2,
                 SizedBox(
                   width: 70.w,
                   child: CustomTextField(
-                    controller: controller,
+                    controller: passwordController,
                     keyboardType: TextInputType.phone,
                     labelText: 'password'.tr(),
+                    validator: Validators.validateEmptyValue,
                   ),
                 ),
                 Gaps.vGap4,
-                // CreateModel(
-                //   onCubitCreated: (cubit) => loginCubit = cubit,
-                //   useCaseCallBack: (model) {
-                //     return LoginUseCase(AuthRepository()).call(
-                //       params: model,
-                //     );
-                //   },
-                //   onSuccess: (LoginModel model) {
-                //     // Navigation.push(
-                //     //   VerifyPhoneScreen(
-                //     //     code: model.code,
-                //     //     loginParams: LoginParams(
-                //     //         dialCode: '+964',
-                //     //         phoneNumber: controller.text.trim(),
-                //     //         userType: UserType.user.index,
-                //     //         language: context.locale.languageCode,
-                //     //         isForSignIn: true,
-                //     //     ),
-                //     //   ),
-                //     // );
-                //   },
-                //   withValidation: false,
-                //   child: CustomButton(
-                //     text: 'login'.tr(),
-                //     onTap: () {
-                //       // if(controller.text.length == 10){
-                //       //   loginCubit.createModel(
-                //       //       requestData: LoginParams(
-                //       //         dialCode: '+964',
-                //       //         phoneNumber: controller.text.trim(),
-                //       //         userType: UserType.user.index,
-                //       //       ));
-                //       // }else{
-                //       //   Utils.showToast("invalid_phone_number".tr());
-                //       // }
-                //     },
-                //   ),
-                // ),
-                CustomButton(
-                  text: 'login'.tr(),
-                  onTap: () {
+                CreateModel(
+                  onCubitCreated: (cubit) => loginCubit = cubit,
+                  useCaseCallBack: (model) {
+                    return LoginUseCase(AuthRepository()).call(
+                      params: model,
+                    );
+                  },
+                  onSuccess: (LoginModel model) {
                     context.go('/home');
                   },
+                  withValidation: false,
+                  child: CustomButton(
+                    text: 'login'.tr(),
+                    onTap: () async {
+                      if(_formKey.currentState!.validate()){
+                        loginCubit.createModel(
+                            requestData: LoginParams(
+                              userNameOrEmailAddress: controller.text.trim(),
+                              password: passwordController.text.trim(),
+                            ));
+                      }
+                    },
+                  ),
                 ),
                 Gaps.vGap2,
               ],

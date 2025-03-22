@@ -9,6 +9,7 @@ import '../../../../../core/boilerplate/repository/core_repository.dart';
 import '../../../../../core/boilerplate/results/result.dart';
 import '../../../../../core/common/models/profile_model.dart';
 import '../../../jobs/data/use_case/get_job_use_case.dart';
+import '../use_case/get_users_use_case.dart';
 
 
 class UserRepository extends CoreRepository {
@@ -25,6 +26,20 @@ class UserRepository extends CoreRepository {
       responseStr: 'UserProfileResponse',
     );
     return call(result: result);
+  }
+
+
+  ///All users
+  Future<Result<List<UserProfileModel>>> getAllUsers({required GetUsersParams params}) async {
+    final result = await RemoteDataSource.request(
+      withAuthentication: true,
+      url: ApiURLs.getAllUserProfile,
+      method: HttpMethod.GET,
+      queryParameters: params.toJson(),
+      converter: (json) => UserListResponse.fromJson(json),
+      responseStr: 'UserListResponse',
+    );
+    return paginatedCall(result: result);
   }
 
 

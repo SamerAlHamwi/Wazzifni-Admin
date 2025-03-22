@@ -3,15 +3,20 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:wazzifni_admin/core/common/models/profile_model.dart';
 import 'package:wazzifni_admin/core/common/style/gaps.dart';
 import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
 import 'package:wazzifni_admin/core/constants/app_assets.dart';
 import 'package:wazzifni_admin/core/constants/app_textStyle.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
 
+import '../../../../core/widgets/image_widgets/custom_image.dart';
+
 
 class UserWidget extends StatelessWidget {
-  const UserWidget({super.key});
+  const UserWidget({super.key, required this.userProfileModel});
+
+  final UserProfileModel userProfileModel;
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +26,10 @@ class UserWidget extends StatelessWidget {
       margin: PaddingInsets.normalPaddingHorizontal,
       child: Row(
         children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: Image.asset(
-              AppAssets.companyLogo,
-              height: 48,
-              width: 48,
-              fit: BoxFit.cover,
-            ),
+          CustomImage.circular(
+            radius: 50,
+            isNetworkImage: true,
+            image: userProfileModel.image?.url ?? '',
           ),
           Gaps.hGap1,
           SizedBox(
@@ -38,7 +39,7 @@ class UserWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'محمد الفواز',
+                  userProfileModel.user?.registrationFullName ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.fontSizeMediumTextStyle.copyWith(
@@ -46,7 +47,7 @@ class UserWidget extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'مصمم مواقع ويب',
+                  '${userProfileModel.user?.dialCode ?? ''}-${userProfileModel.user?.phoneNumber ?? ''}',
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: AppText.fontSizeNormalTextStyle.copyWith(

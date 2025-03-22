@@ -3,6 +3,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../core/common/models/profile_model.dart';
 import '../../../../core/common/style/padding_insets.dart';
 import '../../../../core/constants/app_textStyle.dart';
 import '../../../../core/constants/appcolors.dart';
@@ -58,7 +59,7 @@ class HomeLatestUsers extends StatelessWidget {
                 );
                 List<Widget> items = List.generate(
                   10,
-                      (index) => UserWidget(),
+                      (index) => UserWidget(userProfileModel: UserProfileModel(),),
                 );
 
                 return ListView.builder(

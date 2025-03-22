@@ -33,6 +33,7 @@ abstract class RemoteDataSource {
 
     headers.putIfAbsent("Accept-Language", () => language ?? 'ar');
     headers.putIfAbsent("accept", () => "text/plain");
+    headers.putIfAbsent("Content-Type", () => "application/json");
 
     final response = await ApiProvider.sendObjectRequest<Response>(
       method: method,
