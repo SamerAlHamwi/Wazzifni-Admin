@@ -10,6 +10,7 @@ import 'features/jobs/ui/jobs_screen.dart';
 import 'features/login/ui/login_screen.dart';
 import 'features/notifications/ui/notifications_screen.dart';
 import 'features/publish_job/ui/publish_job_screen.dart';
+import 'features/splash/ui/splash_screen.dart';
 import 'features/users/ui/users_screen.dart';
 
 final GoRouter router = GoRouter(
@@ -17,6 +18,10 @@ final GoRouter router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
+      builder: (context, state) => const SplashScreen(),
+    ),
+    GoRoute(
+      path: '/login',
       builder: (context, state) => const LoginScreen(),
     ),
     GoRoute(

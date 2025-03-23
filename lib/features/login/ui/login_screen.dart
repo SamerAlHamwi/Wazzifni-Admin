@@ -1,10 +1,10 @@
 
 
-import 'package:dio/dio.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wazzifni_admin/core/utils/storage/storage.dart';
 import '../../../../../core/boilerplate/create_model/cubits/create_model_cubit.dart';
 import '../../../../../core/constants/app_assets.dart';
 import '../../../../../core/constants/app_textStyle.dart';
@@ -97,6 +97,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   onSuccess: (LoginModel model) {
+                    SharedStorage.setToken(model.accessToken ?? '');
+                    SharedStorage.setUserName(model.userName ?? '');
                     context.go('/home');
                   },
                   withValidation: false,

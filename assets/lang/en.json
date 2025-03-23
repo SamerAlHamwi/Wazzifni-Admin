@@ -161,6 +161,7 @@
     "users": "Users",
     "dashboard": "Dashboard",
     "search_hint": "Search using name or mobile number",
+    "reject_hint": "Enter the reason for the company's rejection",
     "latest_users": "Latest users",
     "latest_jobs": "Latest jobs",
     "today_users": "Today users",

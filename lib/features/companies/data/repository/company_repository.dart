@@ -1,6 +1,8 @@
 
 
 
+import 'package:wazzifni_admin/features/companies/data/use_case/reject_company_use_case.dart';
+
 import '../../../../../core/boilerplate/api/data_source/remote_data_source.dart';
 import '../../../../../core/boilerplate/api/http/api_urls.dart';
 import '../../../../../core/boilerplate/api/http/http_method.dart';
@@ -10,6 +12,7 @@ import '../../../../../core/common/models/company_model.dart';
 import '../../../../core/common/models/job_model.dart';
 import '../../../../core/common/models/profile_model.dart';
 import '../../../jobs/data/use_case/get_job_use_case.dart';
+import '../use_case/approve_company_use_case.dart';
 import '../use_case/get_companies_use_case.dart';
 
 
@@ -65,6 +68,28 @@ class CompanyRepository extends CoreRepository {
       responseStr: 'UserProfileResponse',
     );
     return call(result: result);
+  }
+
+  ///Approve Company
+  Future<Result<dynamic>> approveCompany({required ApproveCompanyParams params}) async {
+    final result = await RemoteDataSource.noModelRequest(
+      url: ApiURLs.approveCompany,
+      method: HttpMethod.POST,
+      withAuthentication: true,
+      data: params.toJson(),
+    );
+    return noModelCall(result: result);
+  }
+
+  ///Reject Company
+  Future<Result<dynamic>> rejectCompany({required RejectCompanyParams params}) async {
+    final result = await RemoteDataSource.noModelRequest(
+      url: ApiURLs.rejectCompany,
+      method: HttpMethod.POST,
+      withAuthentication: true,
+      data: params.toJson(),
+    );
+    return noModelCall(result: result);
   }
 
 

@@ -12,7 +12,9 @@ import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/job_applications/ui/widgets/user_apply_card.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
+import '../../../core/common/data/common_data.dart';
 import '../../../core/common/models/dropdown_model.dart';
+import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/job_application_model.dart';
 import '../../../core/constants/app_textStyle.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
@@ -31,6 +33,8 @@ class JobApplicationsScreen extends StatefulWidget {
 class _JobsScreenState extends State<JobApplicationsScreen> {
   TextEditingController controller = TextEditingController();
   late PaginationCubit jobsCubit;
+  int cityId = -1;
+  int status = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -50,12 +54,13 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'بغداد'),
-                      DropDownItem(id: 1, name: 'النجف'),
-                      DropDownItem(id: 2, name: 'اربيل'),
-                    ],
-                    onChanged: (value) {},
+                    items: cityListModel.items!
+                        .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
+                        .toList(),
+                    onChanged: (value) {
+                      cityId = int.tryParse(value) ?? -1;
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
                 Gaps.hGap1,
@@ -63,12 +68,11 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "status".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'pending'.tr()),
-                      DropDownItem(id: 1, name: 'approved'.tr()),
-                      DropDownItem(id: 2, name: 'rejected'.tr()),
-                    ],
-                    onChanged: (value) {},
+                    items: StatusEnum.values.map((e)=> DropDownItem(id: e.value, name: e.name.tr())).toList(),
+                    onChanged: (value) {
+                      status = int.tryParse(value) ?? -1;
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -106,8 +110,11 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                 Expanded(
                   child: CustomTextField(
                     controller: controller,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.text,
                     hintText: 'search_hint'.tr(),
+                    onFieldSubmitted: (value){
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -130,12 +137,14 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                       .call(
                     params: GetApplicationJobsParams(
                       request: model,
+                      cityId: cityId,
+                      status: status,
+                      keyword: controller.text.trim(),
                     ),
                   );
                 },
                 listBuilder: (list) {
-                  return
-                    LayoutBuilder(
+                  return LayoutBuilder(
                       builder: (context, constraints) {
                         int itemsPerRow = Utils.calculateRowItemsCount(constraints, 275);
                         List<Widget> items = List.generate(list.length, (index) => UserApplyCard(
@@ -165,7 +174,7 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                       },
                     );
                 },
-                withPagination: false,
+                withPagination: true,
               ),
             ),
           ),

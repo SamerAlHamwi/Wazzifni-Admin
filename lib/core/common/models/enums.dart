@@ -90,3 +90,15 @@ enum FilterOnTime
 
   const FilterOnTime(this.value);
 }
+
+
+enum StatusEnum
+{
+  pending(1),
+  approved(2),
+  rejected(3);
+
+  final int value;
+
+  const StatusEnum(this.value);
+}

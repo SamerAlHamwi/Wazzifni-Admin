@@ -1,29 +1,32 @@
 
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../../core/boilerplate/pagination/widgets/pagination_list.dart';
-import '../../../../core/common/models/job_model.dart';
+import '../../../../core/common/models/job_application_model.dart';
 import '../../../../core/common/style/gaps.dart';
 import '../../../../core/common/style/padding_insets.dart';
 import '../../../../core/constants/app_textStyle.dart';
 import '../../../../core/constants/appcolors.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../../core/widgets/custom_widgets/custom_textfield.dart';
-import '../../../jobs/data/repository/job_repository.dart';
-import '../../../jobs/data/use_case/get_jobs_use_case.dart';
-import '../../../jobs/ui/widgets/job_card.dart';
+import '../../../job_applications/data/repository/job_application_repository.dart';
+import '../../../job_applications/data/use_case/get_applications_job_use_case.dart';
+import '../../../job_applications/ui/widgets/user_apply_card.dart';
 
-class CompanyJobsWidget extends StatefulWidget {
-  const CompanyJobsWidget({super.key,required this.companyId});
+
+
+class CompanyJobApplicationList extends StatefulWidget {
+  const CompanyJobApplicationList({super.key,required this.companyId});
 
   final int companyId;
 
   @override
-  State<CompanyJobsWidget> createState() => _CompanyJobsWidgetState();
+  State<CompanyJobApplicationList> createState() => _CompanyJobApplicationListState();
 }
 
-class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
+class _CompanyJobApplicationListState extends State<CompanyJobApplicationList> {
 
   TextEditingController controller = TextEditingController();
   late PaginationCubit jobsCubit;
@@ -52,7 +55,7 @@ class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
                   ),
                   child: Center(
                     child: Text(
-                      'jobs'.tr(),
+                      'job_applications'.tr(),
                       style: AppText.fontSizeNormalTextStyle.copyWith(
                         fontWeight: FontWeight.bold,
                       ),
@@ -83,12 +86,12 @@ class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
               boxShadow: AppColors.boxShadow2,
               borderRadius: BorderRadius.circular(12),
             ),
-            child: PaginationList<JobModel>(
+            child: PaginationList<JobApplicationModel>(
               paddingTextErrorWidget: 4,
               onCubitCreated: (cubit) => jobsCubit = cubit,
               repositoryCallBack: (model) {
-                return GetJobsListUseCase(JobsRepository()).call(
-                  params: GetJobsParams(
+                return GetApplicationJobsListUseCase(JobApplicationRepository()).call(
+                  params: GetApplicationJobsParams(
                     request: model,
                     companyId: widget.companyId,
                     keyword: controller.text.trim(),
@@ -100,12 +103,12 @@ class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
                   builder: (context, constraints) {
                     int itemsPerRow = Utils.calculateRowItemsCount(
                       constraints,
-                      290,
+                      275,
                     );
-                    List<Widget> items = List.generate(
-                      list.length,
-                      (index) => JobCardWidget(jobModel: list[index],),
-                    );
+                    List<Widget> items = List.generate(list.length, (index) => UserApplyCard(
+                      jobApplicationModel: list[index],
+                      onDelete: (){},
+                    ));
 
                     return ListView.builder(
                       itemCount: (items.length / itemsPerRow).ceil(),

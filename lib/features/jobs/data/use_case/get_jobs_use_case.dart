@@ -86,16 +86,16 @@ class GetJobsParams extends BaseParams {
   toJson() {
     Map<String, dynamic> queryParams = {};
     queryParams.addAll(request.toJson());
-    if (companyId != null) {
+    if (companyId != null && companyId != -1) {
       queryParams.putIfAbsent("CompanyId", () => companyId);
     }
-    if (cityId != null) {
+    if (cityId != null && cityId != -1) {
       queryParams.putIfAbsent("CityId", () => cityId);
     }
     if (keyword != null) {
       queryParams.putIfAbsent("Keyword", () => keyword);
     }
-    if (status != null) {
+    if (status != null && status != -1) {
       queryParams.putIfAbsent("Status", () => status);
     }
     if (timeFilter != null && timeFilter != -1) {

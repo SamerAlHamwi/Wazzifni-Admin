@@ -19,7 +19,7 @@ class NotificationCard extends StatelessWidget {
       padding: PaddingInsets.cardPaddingHV,
       width: double.infinity,
       decoration: BoxDecoration(
-        color: AppColors.subPrimaryColor,
+        color: AppColors.darkPrimaryColor,
         borderRadius: BorderRadius.circular(12),
         boxShadow: AppColors.boxShadow2,
       ),

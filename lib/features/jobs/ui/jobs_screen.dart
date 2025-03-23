@@ -13,6 +13,7 @@ import 'package:wazzifni_admin/features/jobs/ui/widgets/job_card.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/models/get_list_request.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
+import '../../../core/common/data/common_data.dart';
 import '../../../core/common/models/cities_response.dart';
 import '../../../core/common/models/company_model.dart';
 import '../../../core/common/models/dropdown_model.dart';
@@ -34,6 +35,8 @@ class JobsScreen extends StatefulWidget {
 class _JobsScreenState extends State<JobsScreen> {
   TextEditingController controller = TextEditingController();
   late PaginationCubit jobsCubit;
+  int cityId = -1;
+  int status = -1;
   GetJobsParams params = GetJobsParams(
     isIApply: false,
     request: GetListRequest(),
@@ -57,12 +60,13 @@ class _JobsScreenState extends State<JobsScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'بغداد'),
-                      DropDownItem(id: 1, name: 'النجف'),
-                      DropDownItem(id: 2, name: 'اربيل'),
-                    ],
-                    onChanged: (value) {},
+                    items: cityListModel.items!
+                        .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
+                        .toList(),
+                    onChanged: (value) {
+                      cityId = int.tryParse(value) ?? -1;
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
                 Gaps.hGap1,
@@ -70,12 +74,11 @@ class _JobsScreenState extends State<JobsScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "status".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'pending'.tr()),
-                      DropDownItem(id: 1, name: 'approved'.tr()),
-                      DropDownItem(id: 2, name: 'rejected'.tr()),
-                    ],
-                    onChanged: (value) {},
+                    items: StatusEnum.values.map((e)=> DropDownItem(id: e.value, name: e.name.tr())).toList(),
+                    onChanged: (value) {
+                      status = int.tryParse(value) ?? -1;
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -113,8 +116,11 @@ class _JobsScreenState extends State<JobsScreen> {
                 Expanded(
                   child: CustomTextField(
                     controller: controller,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.text,
                     hintText: 'search_hint'.tr(),
+                    onFieldSubmitted: (value){
+                      jobsCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -137,6 +143,9 @@ class _JobsScreenState extends State<JobsScreen> {
                       .call(
                     params: params.copyWith(
                       request: model,
+                      cityId: cityId,
+                      status: status,
+                      keyword: controller.text.trim(),
                     ),
                   );
                 },
@@ -171,7 +180,7 @@ class _JobsScreenState extends State<JobsScreen> {
                       },
                     );
                 },
-                withPagination: false,
+                withPagination: true,
               ),
             ),
           ),

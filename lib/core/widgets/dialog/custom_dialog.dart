@@ -16,9 +16,9 @@ Future showCustomDialog({
       required BuildContext context,
       required String text,
       required VoidCallback onTapOK,
+      required bool isWithCancel,
       VoidCallback? onTapCancel,
       Widget? child,
-      required bool isWithCancel,
       bool? dismissible
     }) async {
   showDialog(
@@ -41,10 +41,12 @@ Future showCustomDialog({
                     color: AppColors.primaryColor,
                     borderRadius: BorderRadius.circular(16.0)),
               ),
+              Gaps.vGap2,
               Image.asset(
                 AppAssets.logo,
-                width: 50.w,
+                width: 40.w,
               ),
+              Gaps.vGap2,
               text.isNotEmpty ? Text(
                 text,
                 style: AppText.fontSizeMediumTextStyle,

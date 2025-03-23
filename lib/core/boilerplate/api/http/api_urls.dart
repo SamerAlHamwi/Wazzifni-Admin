@@ -28,6 +28,8 @@ class ApiURLs {
   static String updateCompanyAccount = '$baseUrl/api/services/app/Company/Update';
   static String getCompanyAccount = '$baseUrl/api/services/app/Company/Get';
   static String getAllCompany = '$baseUrl/api/services/app/Company/GetAll';
+  static String approveCompany = '$baseUrl/api/services/app/Company/Approve';
+  static String rejectCompany = '$baseUrl/api/services/app/Company/Reject';
 
   ///Attachment
   static String uploadAttachment = '$baseUrl/api/services/app/Attachment/Upload';

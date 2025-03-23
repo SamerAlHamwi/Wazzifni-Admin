@@ -18,6 +18,7 @@ class GetApplicationJobsParams extends BaseParams {
   final int? status;
   final bool? deletedByCompany;
   final int? workPostId;
+  final int? cityId;
 
   GetApplicationJobsParams({
     required this.request,
@@ -27,11 +28,16 @@ class GetApplicationJobsParams extends BaseParams {
     this.status,
     this.deletedByCompany,
     this.workPostId,
+    this.cityId,
   });
 
   toJson() {
     Map<String, dynamic> queryParams = {};
     queryParams.addAll(request.toJson());
+
+    if(cityId != null && cityId != -1){
+      queryParams.putIfAbsent("CityId", ()=> cityId);
+    }
     if(companyId != null){
       queryParams.putIfAbsent("CompanyId", ()=> companyId);
     }
@@ -41,7 +47,7 @@ class GetApplicationJobsParams extends BaseParams {
     if(keyword != null){
       queryParams.putIfAbsent("Keyword", ()=> keyword);
     }
-    if(status != null){
+    if(status != null && status != -1){
       queryParams.putIfAbsent("Status", ()=> status);
     }
     if(deletedByCompany != null){

@@ -11,7 +11,9 @@ import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/users/ui/widgets/user_widget.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
+import '../../../core/common/data/common_data.dart';
 import '../../../core/common/models/dropdown_model.dart';
+import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/profile_model.dart';
 import '../../../core/constants/app_textStyle.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
@@ -28,6 +30,8 @@ class UsersScreen extends StatefulWidget {
 class _UsersScreenState extends State<UsersScreen> {
   TextEditingController controller = TextEditingController();
   late PaginationCubit usersCubit;
+  int cityId = -1;
+  int status = -1;
 
   @override
   Widget build(BuildContext context) {
@@ -47,12 +51,13 @@ class _UsersScreenState extends State<UsersScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'بغداد'),
-                      DropDownItem(id: 1, name: 'النجف'),
-                      DropDownItem(id: 2, name: 'اربيل'),
-                    ],
-                    onChanged: (value) {},
+                    items: cityListModel.items!
+                        .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
+                        .toList(),
+                    onChanged: (value) {
+                      cityId = int.tryParse(value) ?? -1;
+                      usersCubit.getList();
+                    },
                   ),
                 ),
                 Gaps.hGap1,
@@ -60,12 +65,11 @@ class _UsersScreenState extends State<UsersScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "status".tr(),
-                    items: [
-                      DropDownItem(id: 0, name: 'pending'.tr()),
-                      DropDownItem(id: 1, name: 'approved'.tr()),
-                      DropDownItem(id: 2, name: 'rejected'.tr()),
-                    ],
-                    onChanged: (value) {},
+                    items: StatusEnum.values.map((e)=> DropDownItem(id: e.value, name: e.name.tr())).toList(),
+                    onChanged: (value) {
+                      status = int.tryParse(value) ?? -1;
+                      usersCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -103,8 +107,11 @@ class _UsersScreenState extends State<UsersScreen> {
                 Expanded(
                   child: CustomTextField(
                     controller: controller,
-                    keyboardType: TextInputType.phone,
+                    keyboardType: TextInputType.text,
                     hintText: 'search_hint'.tr(),
+                    onFieldSubmitted: (value){
+                      usersCubit.getList();
+                    },
                   ),
                 ),
               ],
@@ -124,9 +131,13 @@ class _UsersScreenState extends State<UsersScreen> {
                 onCubitCreated: (cubit) => usersCubit = cubit,
                 repositoryCallBack: (model) {
                   return GetUsersUseCase(UserRepository())
-                      .call(params: GetUsersParams(
-                    request: model,
-                  ),
+                      .call(
+                    params: GetUsersParams(
+                      request: model,
+                      cityId: cityId,
+                      status: status,
+                      keyword: controller.text.trim(),
+                    ),
                   );
                 },
                 listBuilder: (list) {
@@ -158,7 +169,7 @@ class _UsersScreenState extends State<UsersScreen> {
                       },
                     );
                 },
-                withPagination: false,
+                withPagination: true,
               ),
             ),
           ),
