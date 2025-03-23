@@ -9,7 +9,7 @@ class AppAssets {
   static const background = 'assets/images/background1.png';
   static const background2 = 'assets/images/background2.png';
 
-  static const error = 'assets/icons/error.svg';
+  static const error = 'assets/icons/error.png';
   static const connection_error = 'assets/icons/connection_error.svg';
 
   ///Complete account icon
