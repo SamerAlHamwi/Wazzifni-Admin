@@ -10,6 +10,8 @@ import '../../../../../core/utils/Navigation/Navigation.dart';
 import '../../../../../core/widgets/dialog/custom_dialog.dart';
 import '../../../../core/common/models/enums.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../publish_job/data/repository/add_job_repository.dart';
+import '../../../publish_job/data/use_case/delete_work_post_use_case.dart';
 
 class JobCardWidget extends StatefulWidget {
   const JobCardWidget({super.key, this.width, this.jobModel, this.onDelete});
@@ -69,23 +71,19 @@ class _JobCardWidgetState extends State<JobCardWidget> {
                       ),
                       PopupMenuButton<String>(
                         onSelected: (value) async {
-                          if (value == 'edit') {
-                            // Navigation.push(
-                            //     AddJobScreen(
-                            //       jobModel: widget.jobModel,
-                            //     )
-                            // );
+                          if (value == 'job_applications') {
+                            context.go('/job-applications',extra: widget.jobModel!.id!);
                           } else if (value == 'delete') {
                             await showCustomDialog(
                               context: context,
                               text: 'sure_delete_post'.tr(),
                               onTapOK: () async {
-                                // await DeleteJobUseCase(AddJobsRepository())
-                                //     .call(params: DeleteJobParams(id: widget.jobModel!.id!),).then((value){
-                                //   setState(() {
-                                //     isDeleted = true;
-                                //   });
-                                // });
+                                await DeleteJobUseCase(AddJobsRepository())
+                                    .call(params: DeleteJobParams(id: widget.jobModel!.id!),).then((value){
+                                  setState(() {
+                                    isDeleted = true;
+                                  });
+                                });
                                 Navigation.pop();
                               },
                               onTapCancel: () {
@@ -98,9 +96,9 @@ class _JobCardWidgetState extends State<JobCardWidget> {
                         itemBuilder: (BuildContext context) {
                           return [
                             PopupMenuItem(
-                              value: 'edit',
+                              value: 'job_applications',
                               child: Text(
-                                'edit_job'.tr(),
+                                'job_applications'.tr(),
                                 style: AppText.fontSizeNormalTextStyle,
                               ),
                             ),

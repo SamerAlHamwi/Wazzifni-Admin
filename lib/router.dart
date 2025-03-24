@@ -49,7 +49,10 @@ final GoRouter router = GoRouter(
     ),
     GoRoute(
       path: '/job-applications',
-      builder: (context, state) => const JobApplicationsScreen(),
+      builder: (context, state) {
+        final workPostId = state.extra as int?;
+        return JobApplicationsScreen(workPostId: workPostId);
+      },
     ),
     GoRoute(
       path: '/add-job',

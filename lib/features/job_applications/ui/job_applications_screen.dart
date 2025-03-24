@@ -24,8 +24,9 @@ import '../data/use_case/get_applications_job_use_case.dart';
 
 
 class JobApplicationsScreen extends StatefulWidget {
-  const JobApplicationsScreen({super.key});
+  const JobApplicationsScreen({super.key,this.workPostId});
 
+  final int? workPostId;
   @override
   State<JobApplicationsScreen> createState() => _JobsScreenState();
 }
@@ -140,6 +141,7 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                       cityId: cityId,
                       status: status,
                       keyword: controller.text.trim(),
+                      workPostId: widget.workPostId,
                     ),
                   );
                 },

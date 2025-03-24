@@ -5,6 +5,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
 import '../../../../core/common/models/enums.dart';
 import '../../../../core/common/models/job_model.dart';
@@ -18,6 +19,7 @@ import '../../../core/common/style/gaps.dart';
 import '../../../core/common/style/padding_insets.dart';
 import '../../../core/constants/app_assets.dart';
 import '../../../core/constants/app_textStyle.dart';
+import '../../../core/utils/utils.dart';
 import '../../../core/widgets/custom_widgets/custom_slider_widget.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../../companies/ui/widgets/company_info_widget.dart';
@@ -96,7 +98,7 @@ class _AddJobScreenState extends State<AddJobScreen> {
                 ),
                 Gaps.vGap1,
                 Text(
-                    "شركة البراء",
+                    widget.jobModel!.company?.name ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: AppText.fontSizeMediumTextStyle.copyWith(
@@ -109,17 +111,17 @@ class _AddJobScreenState extends State<AddJobScreen> {
                   children: [
                     CompanyInfoBox(
                       title: 'number_of_employees'.tr(),
-                      subTitle: '${50} ${'employee'.tr()}',
+                      subTitle: '${widget.jobModel!.company?.numberOfEmployees} ${'employee'.tr()}',
                     ),
                     Gaps.hGap2,
                     CompanyInfoBox(
                       title: 'company_location'.tr(),
-                      subTitle: 'بغداد',
+                      subTitle: widget.jobModel!.company?.city?.name ?? '',
                     ),
                     Gaps.hGap2,
                     CompanyInfoBox(
                       title: 'company_establishment_date'.tr(),
-                      subTitle: '2024',
+                      subTitle: '${widget.jobModel!.company?.dateOfEstablishment?.year ?? ''}',
                     ),
                   ],
                 ),
@@ -265,64 +267,58 @@ class _AddJobScreenState extends State<AddJobScreen> {
                             );
                           },
                           onSuccess: (model) {
-
+                            context.go('/jobs');
                           },
                           withValidation: false,
                           child: CustomButton(
                             width: 150,
                             text: 'publish'.tr(),
                             onTap: () {
-                              // if(jobName.text.isNotEmpty && jobDescription.text.isNotEmpty){
-                              //   Navigation.push(
-                              //     ExtraAddJobScreen(
-                              //       addJobParams: addJobParams.copyWith(
-                              //         title: jobName.text.trim(),
-                              //         description: jobDescription.text.trim(),
-                              //         workEngagement: WorkEngagement.values.where((element) => element.name == jobType).first.value,
-                              //         workLevel: WorkLevel.values.where((element) => element.name == workLevel).first.value,
-                              //         workPlace: WorkPlace.values.where((element) => element.name == workPlace).first.value,
-                              //         minSalary: salary.start.toInt(),
-                              //         maxSalary: salary.end.toInt(),
-                              //       ),
-                              //       jobModel: widget.jobModel,
-                              //     ),
-                              //   );
-                              // }else{
-                              //   Utils.showToast('please_fill_required_fields'.tr());
-                              // }
-                              // publishCubit.createModel(
-                              //   requestData: widget.addJobParams.copyWith(
-                              //     educationLevel: EducationLevel.values.where((element) => element.name == educationLevel).first.value,
-                              //     experienceYearsCount: experience.toInt(),
-                              //     requiredEmployeesCount: employeesCount.toInt(),
-                              //     isEdit: widget.jobModel != null ? true : false,
-                              //     id: widget.jobModel?.id!,
-                              //   ),
-                              // );
-                            },
-                          ),
-                        ),
-                        Gaps.hGap2,
-                        CreateModel(
-                          onCubitCreated: (cubit) => publishCubit = cubit,
-                          useCaseCallBack: (model) {
-                            return DeleteJobUseCase(AddJobsRepository()).call(
-                              params: model,
-                            );
-                          },
-                          onSuccess: (model) {
-
-                          },
-                          withValidation: false,
-                          child: CustomButton(
-                            width: 150,
-                            isSecondaryGradient: true,
-                            text: 'delete_job'.tr(),
-                            onTap: () {
+                              if(jobName.text.isNotEmpty && jobDescription.text.isNotEmpty){
+                                publishCubit.createModel(
+                                  requestData: addJobParams.copyWith(
+                                    title: jobName.text.trim(),
+                                    description: jobDescription.text.trim(),
+                                    workEngagement: WorkEngagement.values.where((element) => element.name == jobType).first.value,
+                                    workLevel: WorkLevel.values.where((element) => element.name == workLevel).first.value,
+                                    workPlace: WorkPlace.values.where((element) => element.name == workPlace).first.value,
+                                    minSalary: salary.start.toInt(),
+                                    maxSalary: salary.end.toInt(),
+                                    educationLevel: EducationLevel.values.where((element) => element.name == educationLevel).first.value,
+                                    experienceYearsCount: experience.toInt(),
+                                    requiredEmployeesCount: employeesCount.toInt(),
+                                    isEdit: true,
+                                    id: widget.jobModel?.id!,
+                                  ),
+                                );
+                              }else{
+                                Utils.showToast('please_fill_required_fields'.tr());
+                              }
 
                             },
                           ),
                         ),
+                        // Gaps.hGap2,
+                        // CreateModel(
+                        //   onCubitCreated: (cubit) => publishCubit = cubit,
+                        //   useCaseCallBack: (model) {
+                        //     return DeleteJobUseCase(AddJobsRepository()).call(
+                        //       params: model,
+                        //     );
+                        //   },
+                        //   onSuccess: (model) {
+                        //
+                        //   },
+                        //   withValidation: false,
+                        //   child: CustomButton(
+                        //     width: 150,
+                        //     isSecondaryGradient: true,
+                        //     text: 'delete_job'.tr(),
+                        //     onTap: () {
+                        //
+                        //     },
+                        //   ),
+                        // ),
                       ],
                     ),
                   ],
