@@ -245,7 +245,7 @@ class _CompanyHeaderWidgetState extends State<CompanyHeaderWidget> {
                     fillColor: AppColors.primaryColor,
                     color: Colors.black,
                     isSelected: List.generate(
-                      3,
+                      _labels.length,
                       (index) => index == _selectedIndex,
                     ),
                     onPressed: (int index) {

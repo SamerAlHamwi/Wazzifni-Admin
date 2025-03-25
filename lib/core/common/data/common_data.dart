@@ -3,4 +3,4 @@
 
 import '../models/cities_response.dart';
 
-late CityListModel cityListModel;
+// late CityListModel cityListModel;

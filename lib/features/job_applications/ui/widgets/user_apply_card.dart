@@ -4,6 +4,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import '../../../../../core/common/models/job_application_model.dart';
 import '../../../../../core/common/style/gaps.dart';
 import '../../../../../core/common/style/padding_insets.dart';
@@ -29,6 +30,7 @@ class UserApplyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        context.go('/');
         // if(isFromUser){
         //   Navigation.push(CompanyJobDetails(id: jobApplicationModel.workPost!.id!,isFromCompany: false,));
         // }else{

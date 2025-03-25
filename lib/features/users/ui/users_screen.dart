@@ -16,6 +16,7 @@ import '../../../core/common/models/dropdown_model.dart';
 import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/profile_model.dart';
 import '../../../core/constants/app_textStyle.dart';
+import '../../../core/utils/storage/storage.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../data/repository/user_repository.dart';
 import '../data/use_case/get_users_use_case.dart';
@@ -51,7 +52,7 @@ class _UsersScreenState extends State<UsersScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: cityListModel.items!
+                    items: SharedStorage.getCities()!.items!
                         .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
                         .toList(),
                     onChanged: (value) {

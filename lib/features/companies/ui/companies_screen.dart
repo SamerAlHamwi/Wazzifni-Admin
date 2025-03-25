@@ -6,6 +6,7 @@ import 'package:wazzifni_admin/core/common/models/company_model.dart';
 import 'package:wazzifni_admin/core/common/style/gaps.dart';
 import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
 import 'package:wazzifni_admin/core/constants/appcolors.dart';
+import 'package:wazzifni_admin/core/utils/storage/storage.dart';
 import 'package:wazzifni_admin/core/utils/utils.dart';
 import 'package:wazzifni_admin/core/widgets/custom_widgets/custom_dropdown.dart';
 import 'package:wazzifni_admin/features/companies/ui/widgets/company_card.dart';
@@ -51,7 +52,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: cityListModel.items!
+                    items: SharedStorage.getCities()!.items!
                         .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
                         .toList(),
                     onChanged: (value) {

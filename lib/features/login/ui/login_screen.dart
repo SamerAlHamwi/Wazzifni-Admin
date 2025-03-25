@@ -98,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   onSuccess: (LoginModel model) {
                     SharedStorage.setToken(model.accessToken ?? '');
-                    SharedStorage.setUserName(model.userName ?? '');
                     context.go('/home');
                   },
                   withValidation: false,

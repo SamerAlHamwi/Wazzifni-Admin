@@ -3,6 +3,7 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:wazzifni_admin/core/common/models/profile_model.dart';
 import 'package:wazzifni_admin/core/common/style/gaps.dart';
 import 'package:wazzifni_admin/core/common/style/padding_insets.dart';
@@ -20,44 +21,49 @@ class UserWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 200,
-      height: 100,
-      margin: PaddingInsets.normalPaddingHorizontal,
-      child: Row(
-        children: [
-          CustomImage.circular(
-            radius: 50,
-            isNetworkImage: true,
-            image: userProfileModel.image?.url ?? '',
-          ),
-          Gaps.hGap1,
-          SizedBox(
-            width: 125,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  userProfileModel.user?.registrationFullName ?? '',
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.fontSizeMediumTextStyle.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '${userProfileModel.user?.dialCode ?? ''}-${userProfileModel.user?.phoneNumber ?? ''}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: AppText.fontSizeNormalTextStyle.copyWith(
-                    color: AppColors.darkText,
-                  ),
-                ),
-              ],
+    return InkWell(
+      onTap: (){
+        context.go('/user-details',extra: userProfileModel.id);
+      },
+      child: Container(
+        width: 200,
+        height: 100,
+        margin: PaddingInsets.normalPaddingHorizontal,
+        child: Row(
+          children: [
+            CustomImage.circular(
+              radius: 50,
+              isNetworkImage: true,
+              image: userProfileModel.image?.url ?? '',
             ),
-          )
-        ],
+            Gaps.hGap1,
+            SizedBox(
+              width: 125,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    userProfileModel.user?.registrationFullName ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.fontSizeMediumTextStyle.copyWith(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    '${userProfileModel.user?.dialCode ?? ''}-${userProfileModel.user?.phoneNumber ?? ''}',
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: AppText.fontSizeNormalTextStyle.copyWith(
+                      color: AppColors.darkText,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

@@ -1,8 +1,5 @@
 
 
-
-
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +19,7 @@ import '../../../core/constants/app_textStyle.dart';
 import '../../../core/utils/utils.dart';
 import '../../../core/widgets/custom_widgets/custom_slider_widget.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
+import '../../../core/widgets/image_widgets/custom_image.dart';
 import '../../companies/ui/widgets/company_info_widget.dart';
 import '../data/repository/add_job_repository.dart';
 import '../data/use_case/add_job_use_case.dart';
@@ -88,13 +86,10 @@ class _AddJobScreenState extends State<AddJobScreen> {
             ),
             child: Column(
               children: [
-                CircleAvatar(
+                CustomImage.circular(
                   radius: 30,
-                  backgroundColor: Colors.white,
-                  child: CircleAvatar(
-                    radius: 28,
-                    backgroundImage: AssetImage(AppAssets.companyLogo),
-                  ),
+                  isNetworkImage: true,
+                  image: widget.jobModel!.company?.profile?.url ?? '',
                 ),
                 Gaps.vGap1,
                 Text(

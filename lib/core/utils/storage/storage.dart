@@ -1,5 +1,6 @@
 
 import 'package:get_storage/get_storage.dart';
+import '../../common/models/cities_response.dart';
 import '../../common/models/company_model.dart';
 import '../../common/models/profile_model.dart';
 
@@ -13,9 +14,7 @@ class SharedStorage {
   static String userTypeKey = 'userTypeKey';
   static String companyIdKey = 'companyIdKey';
   static String profileIdKey = 'profileIdKey';
-  static String userNameKey = 'userNameKey';
-  static String companyNameKey = 'companyNameKey';
-  static String companyKey = 'company';
+  static String citiesKey = 'citiesKey';
   static String userKey = 'user';
 
   static init() async {
@@ -54,22 +53,6 @@ class SharedStorage {
     return box.read(userTypeKey);
   }
 
-  static setUserName(String userName) {
-    box.write(userNameKey, userName);
-  }
-
-  static getUserName() {
-    return box.read(userNameKey);
-  }
-
-  static setCompanyName(String companyName) {
-    box.write(companyNameKey, companyName);
-  }
-
-  static getCompanyName() {
-    return box.read(companyNameKey) ?? '';
-  }
-
   static setProfileId(int profileId) {
     box.write(profileIdKey, profileId);
   }
@@ -86,26 +69,14 @@ class SharedStorage {
     return box.read(companyIdKey);
   }
 
-  static void setCompany(Company company) {
-    box.write(companyKey, company.toJson());
+  static void setCities(CityListModel cityListModel) {
+    box.write(citiesKey, cityListModel.toJson());
   }
 
-  static Company? getCompany() {
-    Map<String, dynamic>? companyJson = box.read(companyKey);
-    if (companyJson != null) {
-      return Company.fromJson(companyJson);
-    }
-    return null;
-  }
-
-  static void setEmployee(UserProfileModel userProfileModel) {
-    box.write(userKey, userProfileModel.toJson());
-  }
-
-  static UserProfileModel? getEmployee() {
-    Map<String, dynamic>? userJson = box.read(userKey);
-    if (userJson != null) {
-      return UserProfileModel.fromJson(userJson);
+  static CityListModel? getCities() {
+    Map<String, dynamic>? citiesJson = box.read(citiesKey);
+    if (citiesJson != null) {
+      return CityListModel.fromJson(citiesJson);
     }
     return null;
   }

@@ -11,6 +11,7 @@ import 'features/login/ui/login_screen.dart';
 import 'features/notifications/ui/notifications_screen.dart';
 import 'features/publish_job/ui/publish_job_screen.dart';
 import 'features/splash/ui/splash_screen.dart';
+import 'features/users/ui/user_details_screen.dart';
 import 'features/users/ui/users_screen.dart';
 
 final GoRouter router = GoRouter(
@@ -31,6 +32,13 @@ final GoRouter router = GoRouter(
     GoRoute(
       path: '/users',
       builder: (context, state) => const UsersScreen(),
+    ),
+    GoRoute(
+      path: '/user-details',
+      builder: (context, state) {
+        final userId = state.extra as int?;
+        return ProfileScreen(userId: userId!);
+      },
     ),
     GoRoute(
       path: '/companies',

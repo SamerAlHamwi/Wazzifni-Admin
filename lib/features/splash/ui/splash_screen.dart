@@ -2,7 +2,6 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../../../../core/common/data/common_data.dart';
 import '../../../../core/constants/app_assets.dart';
 import '../../../core/utils/notifications/local_notification.dart';
 import '../../../core/utils/storage/storage.dart';
@@ -33,7 +32,8 @@ class _SplashScreenState extends State<SplashScreen> {
     GetCitiesUseCase(AuthRepository()).call(
       params: CitiesParams(),
     ).then((value){
-      cityListModel = value.data!;
+      // cityListModel = value.data!;
+      SharedStorage.setCities(value.data!);
       getNextPage();
     });
   }

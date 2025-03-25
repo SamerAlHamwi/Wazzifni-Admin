@@ -17,6 +17,7 @@ import '../../../core/common/models/dropdown_model.dart';
 import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/job_application_model.dart';
 import '../../../core/constants/app_textStyle.dart';
+import '../../../core/utils/storage/storage.dart';
 import '../../../core/widgets/custom_widgets/custom_textfield.dart';
 import '../data/repository/job_application_repository.dart';
 import '../data/use_case/get_applications_job_use_case.dart';
@@ -55,7 +56,7 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                   width: 150,
                   child: CustomDropdown(
                     labelText: "city".tr(),
-                    items: cityListModel.items!
+                    items: SharedStorage.getCities()!.items!
                         .map((e) => DropDownItem(id: e.id!, name: e.name ?? ''))
                         .toList(),
                     onChanged: (value) {
