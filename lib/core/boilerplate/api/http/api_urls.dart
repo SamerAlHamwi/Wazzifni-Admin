@@ -14,6 +14,9 @@ class ApiURLs {
   ///Auth
   static String login = '$baseUrl/api/TokenAuth/Authenticate';
 
+  ///Roles
+  static String allRoles = '$baseUrl/api/services/app/Role/GetAll';
+
   ///Cities
   static String allCities = '$baseUrl/api/services/app/City/GetAll';
 

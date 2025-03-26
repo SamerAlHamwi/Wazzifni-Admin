@@ -167,6 +167,7 @@
     "today_users": "Today users",
     "today_jobs": "Today jobs",
     "paid_jobs": "Paid jobs",
-    "users_found_job": "Approved users"
+    "users_found_job": "Approved users",
+    "roles": "Roles"
 
 }

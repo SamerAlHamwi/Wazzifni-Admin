@@ -11,7 +11,6 @@ import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/users/ui/widgets/user_widget.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
-import '../../../core/common/data/common_data.dart';
 import '../../../core/common/models/dropdown_model.dart';
 import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/profile_model.dart';
