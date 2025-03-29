@@ -36,6 +36,17 @@ class Utils{
     }
   }
 
+  static getStatusColor(StatusEnum status){
+    switch (status) {
+      case StatusEnum.pending:
+        return AppColors.secondaryColor;
+      case StatusEnum.approved:
+        return AppColors.green;
+      case StatusEnum.rejected:
+        return AppColors.red;
+    }
+  }
+
   static String getFileNameFromUrl(String url) {
     return Uri.parse(url).pathSegments.last;
   }

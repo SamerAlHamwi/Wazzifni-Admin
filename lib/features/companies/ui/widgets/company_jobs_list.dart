@@ -27,6 +27,7 @@ class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
 
   TextEditingController controller = TextEditingController();
   late PaginationCubit jobsCubit;
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -107,27 +108,27 @@ class _CompanyJobsWidgetState extends State<CompanyJobsWidget> {
                       (index) => JobCardWidget(jobModel: list[index],),
                     );
 
-                    return ListView.builder(
-                      itemCount: (items.length / itemsPerRow).ceil(),
-                      itemBuilder: (context, rowIndex) {
-                        int startIndex = rowIndex * itemsPerRow;
-                        int endIndex = (startIndex + itemsPerRow).clamp(
-                          0,
-                          items.length,
-                        );
-                        List<Widget> rowItems = items.sublist(
-                          startIndex,
-                          endIndex,
-                        );
+                    return CustomScrollView(
+                      controller: scrollController,
+                      slivers: [
+                        SliverList(
+                          delegate: SliverChildBuilderDelegate((context, rowIndex) {
+                            int startIndex = rowIndex * itemsPerRow;
+                            int endIndex = (startIndex + itemsPerRow).clamp(0, items.length);
+                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
 
-                        return Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 5),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: rowItems,
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 5),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: rowItems,
+                              ),
+                            );
+                          },
+                            childCount: (items.length / itemsPerRow).ceil(),
                           ),
-                        );
-                      },
+                        ),
+                      ],
                     );
                   },
                 );

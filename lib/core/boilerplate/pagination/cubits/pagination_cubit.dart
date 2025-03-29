@@ -11,7 +11,7 @@ class PaginationCubit<ListModel> extends Cubit<PaginationState> {
   PaginationCubit(this.getData) : super(PaginationInitial());
   List<ListModel> list = [];
   Map<String, dynamic> params = {};
-  int MaxResultCount = 10;
+  int MaxResultCount = 20;
   int SkipCount = 0;
 
   getList({bool loadMore = false}) async {
@@ -19,7 +19,7 @@ class PaginationCubit<ListModel> extends Cubit<PaginationState> {
       SkipCount = 0;
       emit(Loading());
     } else {
-      SkipCount += 10;
+      SkipCount += 20;
     }
 
     var requestData = GetListRequest(

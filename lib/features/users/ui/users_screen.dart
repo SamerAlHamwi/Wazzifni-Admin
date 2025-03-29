@@ -28,7 +28,9 @@ class UsersScreen extends StatefulWidget {
 }
 
 class _UsersScreenState extends State<UsersScreen> {
+
   TextEditingController controller = TextEditingController();
+  ScrollController scrollController = ScrollController();
   late PaginationCubit usersCubit;
   int cityId = -1;
   int status = -1;
@@ -146,25 +148,27 @@ class _UsersScreenState extends State<UsersScreen> {
                       builder: (context, constraints) {
                         int itemsPerRow = Utils.calculateRowItemsCount(constraints, 216);
                         List<Widget> items = List.generate(list.length, (index) => UserWidget(userProfileModel: list[index],));
+                        return CustomScrollView(
+                          controller: scrollController,
+                          slivers: [
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((context, rowIndex) {
+                                  int startIndex = rowIndex * itemsPerRow;
+                                  int endIndex = (startIndex + itemsPerRow).clamp(0, items.length);
+                                  List<Widget> rowItems = items.sublist(startIndex, endIndex);
 
-                        return ListView.builder(
-                          itemCount: (items.length / itemsPerRow).ceil(),
-                          itemBuilder: (context, rowIndex) {
-                            int startIndex = rowIndex * itemsPerRow;
-                            int endIndex = (startIndex + itemsPerRow).clamp(
-                              0,
-                              items.length,
-                            );
-                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
-
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: rowItems,
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 5),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: rowItems,
+                                    ),
+                                  );
+                                },
+                                childCount: (items.length / itemsPerRow).ceil(),
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         );
                       },
                     );

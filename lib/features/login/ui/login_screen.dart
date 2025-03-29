@@ -37,86 +37,85 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return BackgroundPage(
-      body: SingleChildScrollView(
-        child: Container(
-          width: 400,
-          padding: PaddingInsets.extraBigPaddingAll,
-          margin: PaddingInsets.extraBigPaddingAll,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(12),
-            boxShadow: AppColors.boxShadow,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Gaps.vGap2,
-                Image.asset(
-                  AppAssets.logo,
-                  width: 150,
-                  height: 150,
-                ),
-                Gaps.vGap2,
-                Text(
-                  'welcome_back'.tr(),
-                  style: AppText.fontSizeExtraLargeTextStyle,
-                ),
-                Text(
-                  'login_hint'.tr(),
-                  style: AppText.fontSizeNormalTextStyle,
-                ),
-                Gaps.vGap4,
-                SizedBox(
-                  width: 70.w,
-                  child: CustomTextField(
-                      controller: controller,
-                      keyboardType: TextInputType.phone,
-                      labelText: 'user_name'.tr(),
-                    validator: Validators.validateEmptyValue,
-                  ),
-                ),
-                Gaps.vGap2,
-                SizedBox(
-                  width: 70.w,
-                  child: CustomTextField(
-                    controller: passwordController,
+      body: Container(
+        width: 400,
+        padding: PaddingInsets.bigPaddingAll,
+        margin: PaddingInsets.bigPaddingAll,
+        // decoration: BoxDecoration(
+        //   color: AppColors.white,
+        //   borderRadius: BorderRadius.circular(12),
+        //   boxShadow: AppColors.boxShadow,
+        // ),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Gaps.vGap2,
+              Image.asset(
+                AppAssets.logo,
+                width: 150,
+                height: 150,
+              ),
+              Gaps.vGap2,
+              Text(
+                'welcome_back'.tr(),
+                style: AppText.fontSizeExtraLargeTextStyle,
+              ),
+              Text(
+                'login_hint'.tr(),
+                style: AppText.fontSizeNormalTextStyle,
+              ),
+              Gaps.vGap4,
+              SizedBox(
+                width: 300,
+                child: CustomTextField(
+                    controller: controller,
                     keyboardType: TextInputType.phone,
-                    labelText: 'password'.tr(),
-                    validator: Validators.validateEmptyValue,
-                  ),
+                    labelText: 'user_name'.tr(),
+                  validator: Validators.validateEmptyValue,
                 ),
-                Gaps.vGap4,
-                CreateModel(
-                  onCubitCreated: (cubit) => loginCubit = cubit,
-                  useCaseCallBack: (model) {
-                    return LoginUseCase(AuthRepository()).call(
-                      params: model,
-                    );
-                  },
-                  onSuccess: (LoginModel model) {
-                    SharedStorage.setToken(model.accessToken ?? '');
-                    context.go('/home');
-                  },
-                  withValidation: false,
-                  child: CustomButton(
-                    text: 'login'.tr(),
-                    onTap: () async {
-                      if(_formKey.currentState!.validate()){
-                        loginCubit.createModel(
-                            requestData: LoginParams(
-                              userNameOrEmailAddress: controller.text.trim(),
-                              password: passwordController.text.trim(),
-                            ));
-                      }
-                    },
-                  ),
+              ),
+              Gaps.vGap2,
+              SizedBox(
+                width: 300,
+                child: CustomTextField(
+                  controller: passwordController,
+                  keyboardType: TextInputType.phone,
+                  labelText: 'password'.tr(),
+                  validator: Validators.validateEmptyValue,
                 ),
-                Gaps.vGap2,
-              ],
-            ),
+              ),
+              Gaps.vGap4,
+              CreateModel(
+                onCubitCreated: (cubit) => loginCubit = cubit,
+                useCaseCallBack: (model) {
+                  return LoginUseCase(AuthRepository()).call(
+                    params: model,
+                  );
+                },
+                onSuccess: (LoginModel model) {
+                  SharedStorage.setToken(model.accessToken ?? '');
+                  context.go('/home');
+                },
+                withValidation: false,
+                child: CustomButton(
+                  text: 'login'.tr(),
+                  width: 300,
+                  onTap: () async {
+                    if(_formKey.currentState!.validate()){
+                      loginCubit.createModel(
+                          requestData: LoginParams(
+                            userNameOrEmailAddress: controller.text.trim(),
+                            password: passwordController.text.trim(),
+                          ));
+                    }
+                  },
+                ),
+              ),
+              Gaps.vGap2,
+            ],
           ),
         ),
       ),

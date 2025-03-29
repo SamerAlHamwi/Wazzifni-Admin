@@ -58,8 +58,17 @@ class _JobCardWidgetState extends State<JobCardWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      Container(
+                        width: 8,
+                        height: 8,
+                        padding: EdgeInsets.symmetric(horizontal: 2),
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Utils.getStatusColor(StatusEnum.values.firstWhere((e) => widget.jobModel!.status == e.value),)
+                        ),
+                      ),
                       SizedBox(
-                        width: 200,
+                        width: 190,
                         child: Text(
                           widget.jobModel!.title ?? '',
                           maxLines: 1,
@@ -78,16 +87,14 @@ class _JobCardWidgetState extends State<JobCardWidget> {
                               context: context,
                               text: 'sure_delete_post'.tr(),
                               onTapOK: () async {
-                                await DeleteJobUseCase(AddJobsRepository())
-                                    .call(params: DeleteJobParams(id: widget.jobModel!.id!),).then((value){
-                                  setState(() {
-                                    isDeleted = true;
-                                  });
+                                DeleteJobUseCase(AddJobsRepository()).call(params: DeleteJobParams(id: widget.jobModel!.id!),).then((value){});
+                                setState(() {
+                                  isDeleted = true;
                                 });
-                                Navigation.pop();
+                                Navigator.pop(context, true);
                               },
                               onTapCancel: () {
-                                Navigation.pop();
+                                Navigator.pop(context, true);
                               },
                               isWithCancel: true,
                             );
@@ -237,4 +244,5 @@ class _JobCardWidgetState extends State<JobCardWidget> {
       return 75;
     }
   }
+
 }

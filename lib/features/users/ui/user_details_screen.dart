@@ -16,9 +16,11 @@ import '../../../../../core/constants/app_textStyle.dart';
 import '../../../../../core/constants/appcolors.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
+import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/job_application_model.dart';
 import '../../../core/constants/app_assets.dart';
 import '../../../core/utils/utils.dart';
+import '../../../core/widgets/custom_widgets/custom_button.dart';
 import '../../../core/widgets/image_widgets/custom_image.dart';
 import '../../home/ui/root_page.dart';
 import '../../job_applications/data/repository/job_application_repository.dart';
@@ -49,6 +51,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late PaginationCubit jobsCubit;
   int _selectedIndex = 0;
   final List<String> _labels = ["job_applications".tr(), "account_info".tr()];
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -144,39 +147,118 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ],
                               ),
-                              SizedBox(
-                                height: 40,
-                                child: ToggleButtons(
-                                  borderRadius: BorderRadius.circular(10),
-                                  selectedBorderColor:
-                                      AppColors.darkPrimaryColor,
-                                  selectedColor: Colors.white,
-                                  disabledColor: Colors.white,
-                                  fillColor: AppColors.primaryColor,
-                                  color: Colors.black,
-                                  isSelected: List.generate(
-                                    _labels.length,
-                                    (index) => index == _selectedIndex,
+                              Row(
+                                children: [
+                                  // CustomButton(
+                                  //   width: 120,
+                                  //   height: 35,
+                                  //   isSecondaryGradient: true,
+                                  //   text:
+                                  //   StatusEnum.values
+                                  //       .firstWhere((e) => userProfileModel.status == e.value)
+                                  //       .name
+                                  //       .tr(),
+                                  //   onTap: () async {
+                                  //     final RenderBox button =
+                                  //     context.findRenderObject() as RenderBox;
+                                  //     final RenderBox overlay =
+                                  //     Overlay.of(context).context.findRenderObject()
+                                  //     as RenderBox;
+                                  //
+                                  //     // Get the button’s global position
+                                  //     final Offset position = button.localToGlobal(
+                                  //       Offset.zero,
+                                  //       ancestor: overlay,
+                                  //     );
+                                  //     final Size buttonSize = button.size;
+                                  //
+                                  //     final selectedValue = await showMenu(
+                                  //       context: context,
+                                  //       position: RelativeRect.fromLTRB(
+                                  //         position.dx + 15, // X position (left)
+                                  //         position.dy +
+                                  //             buttonSize.height -
+                                  //             170, // Adjust Y position with a smaller offset
+                                  //         position.dx + buttonSize.width, // Right boundary
+                                  //         position.dy +
+                                  //             buttonSize.height +
+                                  //             100, // Bottom boundary (not really used)
+                                  //       ),
+                                  //       items:
+                                  //       StatusEnum.values
+                                  //           .map(
+                                  //             (e) => PopupMenuItem(
+                                  //           value: e.value,
+                                  //           child: Text(
+                                  //             e.name.tr(),
+                                  //             style: AppText.fontSizeNormalTextStyle,
+                                  //           ),
+                                  //         ),
+                                  //       )
+                                  //           .toList(),
+                                  //     );
+                                  //     if (selectedValue != null) {
+                                  //       int currentStatus =
+                                  //           StatusEnum.values
+                                  //               .firstWhere(
+                                  //                 (e) => userProfileModel. == e.value,
+                                  //           )
+                                  //               .value;
+                                  //       if (selectedValue == currentStatus) {
+                                  //         return;
+                                  //       }
+                                  //       if (selectedValue == 2) {
+                                  //         // await ApproveCompanyUseCase(CompanyRepository())
+                                  //         //     .call(
+                                  //         //   params: ApproveCompanyParams(
+                                  //         //     id: widget.company.id!,
+                                  //         //   ),
+                                  //         // )
+                                  //         //     .then((value) {
+                                  //         //   widget.onChangeStatus();
+                                  //         // });
+                                  //       } else if (selectedValue == 3) {
+                                  //
+                                  //       } else {}
+                                  //     }
+                                  //   },
+                                  // ),
+                                  Gaps.hGap2,
+                                  SizedBox(
+                                    height: 40,
+                                    child: ToggleButtons(
+                                      borderRadius: BorderRadius.circular(10),
+                                      selectedBorderColor:
+                                          AppColors.darkPrimaryColor,
+                                      selectedColor: Colors.white,
+                                      disabledColor: Colors.white,
+                                      fillColor: AppColors.primaryColor,
+                                      color: Colors.black,
+                                      isSelected: List.generate(
+                                        _labels.length,
+                                        (index) => index == _selectedIndex,
+                                      ),
+                                      onPressed: (int index) {
+                                        setState(() {
+                                          _selectedIndex = index;
+                                        });
+                                        // widget.onChangeIndex(index);
+                                      },
+                                      children:
+                                          _labels
+                                              .map(
+                                                (label) => Padding(
+                                                  padding:
+                                                      const EdgeInsets.symmetric(
+                                                        horizontal: 12,
+                                                      ),
+                                                  child: Text(label),
+                                                ),
+                                              )
+                                              .toList(),
+                                    ),
                                   ),
-                                  onPressed: (int index) {
-                                    setState(() {
-                                      _selectedIndex = index;
-                                    });
-                                    // widget.onChangeIndex(index);
-                                  },
-                                  children:
-                                      _labels
-                                          .map(
-                                            (label) => Padding(
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                    horizontal: 12,
-                                                  ),
-                                              child: Text(label),
-                                            ),
-                                          )
-                                          .toList(),
-                                ),
+                                ],
                               ),
                             ],
                           ),
@@ -221,31 +303,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         ),
                                       );
 
-                                      return ListView.builder(
-                                        itemCount:
-                                            (items.length / itemsPerRow).ceil(),
-                                        itemBuilder: (context, rowIndex) {
-                                          int startIndex =
-                                              rowIndex * itemsPerRow;
-                                          int endIndex = (startIndex +
-                                                  itemsPerRow)
-                                              .clamp(0, items.length);
-                                          List<Widget> rowItems = items.sublist(
-                                            startIndex,
-                                            endIndex,
-                                          );
+                                      return CustomScrollView(
+                                        controller: scrollController,
+                                        slivers: [
+                                          SliverList(
+                                            delegate: SliverChildBuilderDelegate((context, rowIndex) {
+                                              int startIndex = rowIndex * itemsPerRow;
+                                              int endIndex = (startIndex + itemsPerRow).clamp(0, items.length);
+                                              List<Widget> rowItems = items.sublist(startIndex, endIndex);
 
-                                          return Padding(
-                                            padding: const EdgeInsets.symmetric(
-                                              vertical: 5,
+                                              return Padding(
+                                                padding: const EdgeInsets.symmetric(vertical: 5),
+                                                child: Row(
+                                                  mainAxisAlignment: MainAxisAlignment.center,
+                                                  children: rowItems,
+                                                ),
+                                              );
+                                            },
+                                              childCount: (items.length / itemsPerRow).ceil(),
                                             ),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: rowItems,
-                                            ),
-                                          );
-                                        },
+                                          ),
+                                        ],
                                       );
                                     },
                                   );

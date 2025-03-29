@@ -10,6 +10,7 @@ import '../../../../../core/common/style/gaps.dart';
 import '../../../../../core/common/style/padding_insets.dart';
 import '../../../../../core/constants/app_textStyle.dart';
 import '../../../../../core/constants/appcolors.dart';
+import '../../../../core/common/models/enums.dart';
 import '../../../../core/utils/utils.dart';
 import '../../../publish_job/data/use_case/delete_work_post_use_case.dart';
 import '../../data/repository/job_application_repository.dart';
@@ -30,12 +31,7 @@ class UserApplyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/');
-        // if(isFromUser){
-        //   Navigation.push(CompanyJobDetails(id: jobApplicationModel.workPost!.id!,isFromCompany: false,));
-        // }else{
-        //   Navigation.push(CompanyUserApplyScreen(jobApplicationModel: jobApplicationModel,));
-        // }
+        context.go('/user-details',extra: jobApplicationModel.profile?.id);
       },
       child: Container(
         width: 250,
@@ -61,9 +57,9 @@ class UserApplyCard extends StatelessWidget {
                           jobApplicationModel.profile?.image?.url ?? ''
                       ),
                     ),
-                    Gaps.hGap2,
+                    Gaps.hGap1,
                     SizedBox(
-                      width: 125,
+                      width: 120,
                       child: Column(
                         crossAxisAlignment:
                         CrossAxisAlignment.start,
@@ -140,7 +136,7 @@ class UserApplyCard extends StatelessWidget {
                     horizontal: 6
                   ),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
+                    color: Utils.getStatusColor(StatusEnum.values.firstWhere((e) => jobApplicationModel.status == e.value),),
                     borderRadius: BorderRadius.circular(4)
                   ),
                   child: Text(

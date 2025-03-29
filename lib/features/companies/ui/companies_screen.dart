@@ -33,6 +33,7 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
   late PaginationCubit companiesCubit;
   int cityId = -1;
   int status = -1;
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -147,24 +148,27 @@ class _CompaniesScreenState extends State<CompaniesScreen> {
                         int itemsPerRow = Utils.calculateRowItemsCount(constraints, 160);
                         List<Widget> items = List.generate(list.length, (index) => CompanyCard(company: list[index],));
 
-                        return ListView.builder(
-                          itemCount: (items.length / itemsPerRow).ceil(),
-                          itemBuilder: (context, rowIndex) {
-                            int startIndex = rowIndex * itemsPerRow;
-                            int endIndex = (startIndex + itemsPerRow).clamp(
-                              0,
-                              items.length,
-                            );
-                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
+                        return CustomScrollView(
+                          controller: scrollController,
+                          slivers: [
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((context, rowIndex) {
+                                int startIndex = rowIndex * itemsPerRow;
+                                int endIndex = (startIndex + itemsPerRow).clamp(0, items.length);
+                                List<Widget> rowItems = items.sublist(startIndex, endIndex);
 
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: rowItems,
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: rowItems,
+                                  ),
+                                );
+                              },
+                                childCount: (items.length / itemsPerRow).ceil(),
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         );
                       },
                     );

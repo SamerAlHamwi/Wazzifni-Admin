@@ -12,7 +12,6 @@ import 'package:wazzifni_admin/features/home/ui/root_page.dart';
 import 'package:wazzifni_admin/features/job_applications/ui/widgets/user_apply_card.dart';
 import '../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
 import '../../../core/boilerplate/pagination/widgets/pagination_list.dart';
-import '../../../core/common/data/common_data.dart';
 import '../../../core/common/models/dropdown_model.dart';
 import '../../../core/common/models/enums.dart';
 import '../../../core/common/models/job_application_model.dart';
@@ -37,6 +36,7 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
   late PaginationCubit jobsCubit;
   int cityId = -1;
   int status = -1;
+  ScrollController scrollController = ScrollController();
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +124,7 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
           ),
           Expanded(
             child: Container(
+              width: double.infinity,
               padding: PaddingInsets.bigPaddingAll,
               margin: PaddingInsets.bigPaddingAll,
               decoration: BoxDecoration(
@@ -155,24 +156,27 @@ class _JobsScreenState extends State<JobApplicationsScreen> {
                             onDelete: (){},
                         ));
 
-                        return ListView.builder(
-                          itemCount: (items.length / itemsPerRow).ceil(),
-                          itemBuilder: (context, rowIndex) {
-                            int startIndex = rowIndex * itemsPerRow;
-                            int endIndex = (startIndex + itemsPerRow).clamp(
-                              0,
-                              items.length,
-                            );
-                            List<Widget> rowItems = items.sublist(startIndex, endIndex);
+                        return CustomScrollView(
+                          controller: scrollController,
+                          slivers: [
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate((context, rowIndex) {
+                                int startIndex = rowIndex * itemsPerRow;
+                                int endIndex = (startIndex + itemsPerRow).clamp(0, items.length);
+                                List<Widget> rowItems = items.sublist(startIndex, endIndex);
 
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: rowItems,
+                                return Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 5),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: rowItems,
+                                  ),
+                                );
+                              },
+                                childCount: (items.length / itemsPerRow).ceil(),
                               ),
-                            );
-                          },
+                            ),
+                          ],
                         );
                       },
                     );

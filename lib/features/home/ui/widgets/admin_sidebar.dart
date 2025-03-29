@@ -32,7 +32,7 @@ class AdminSidebar extends StatelessWidget {
           _buildSidebarItem(2, AppAssets.myRequests, "job_applications".tr(),context),
           _buildSidebarItem(3, AppAssets.users, "users".tr(),context),
           _buildSidebarItem(4, AppAssets.companies, "companies".tr(),context),
-          _buildSidebarItem(5, AppAssets.companies, "roles".tr(),context),
+          _buildSidebarItem(5, AppAssets.roles, "roles".tr(),context),
         ],
       ),
     );

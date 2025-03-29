@@ -180,63 +180,64 @@ class _PaginationListState<Model> extends State<PaginationList<Model>> {
       footer: customFooter,
       child: child,
     );
-
-    //   FadeAnimation(
-    //   delay: 0.2,
-    //   child: widget.inBrokerScreen
-    //       ? Container(
-    //     width: MediaQuery.of(context).size.width,
-    //     height:
-    //     list.isEmpty ? 0 : widget.height ?? MediaQuery.of(context).size.height * 0.35,
-    //     margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
-    //     child: Column(
-    //       crossAxisAlignment: CrossAxisAlignment.start,
-    //       children: [
-    //         list.isNotEmpty? widget.titleWidget : const Offstage(),
-    //         const SizedBox(height: 8),
-    //         Expanded(
-    //           child: SmartRefresher(
-    //             physics: widget.physics,
-    //             scrollController: widget.scrollController,
-    //             scrollDirection: widget.scrollDirection,
-    //             enablePullDown: widget.scrollDirection == Axis.vertical,
-    //             enablePullUp: widget.withPagination != null
-    //                 ? widget.withPagination!
-    //                 : widget.scrollDirection == Axis.vertical,
-    //             header: const MaterialClassicHeader(),
-    //             controller: _refreshController,
-    //             onRefresh: () async {
-    //               cubit?.getList();
-    //             },
-    //             onLoading: () async {
-    //               cubit?.getList(loadMore: true);
-    //             },
-    //             footer: customFooter,
-    //             child: child,
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   )
-    //       : SmartRefresher(
-    //     physics: widget.physics,
-    //     scrollController: widget.scrollController,
-    //     scrollDirection: widget.scrollDirection,
-    //     enablePullDown: widget.scrollDirection == Axis.vertical,
-    //     enablePullUp: widget.withPagination != null
-    //         ? widget.withPagination!
-    //         : widget.scrollDirection == Axis.vertical,
-    //     header: const MaterialClassicHeader(),
-    //     controller: _refreshController,
-    //     onRefresh: () async {
-    //       cubit?.getList();
-    //     },
-    //     onLoading: () async {
-    //       cubit?.getList(loadMore: true);
-    //     },
-    //     footer: customFooter,
-    //     child: child,
-    //   ),
-    // );
   }
 }
+
+
+//   FadeAnimation(
+//   delay: 0.2,
+//   child: widget.inBrokerScreen
+//       ? Container(
+//     width: MediaQuery.of(context).size.width,
+//     height:
+//     list.isEmpty ? 0 : widget.height ?? MediaQuery.of(context).size.height * 0.35,
+//     margin: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         list.isNotEmpty? widget.titleWidget : const Offstage(),
+//         const SizedBox(height: 8),
+//         Expanded(
+//           child: SmartRefresher(
+//             physics: widget.physics,
+//             scrollController: widget.scrollController,
+//             scrollDirection: widget.scrollDirection,
+//             enablePullDown: widget.scrollDirection == Axis.vertical,
+//             enablePullUp: widget.withPagination != null
+//                 ? widget.withPagination!
+//                 : widget.scrollDirection == Axis.vertical,
+//             header: const MaterialClassicHeader(),
+//             controller: _refreshController,
+//             onRefresh: () async {
+//               cubit?.getList();
+//             },
+//             onLoading: () async {
+//               cubit?.getList(loadMore: true);
+//             },
+//             footer: customFooter,
+//             child: child,
+//           ),
+//         ),
+//       ],
+//     ),
+//   )
+//       : SmartRefresher(
+//     physics: widget.physics,
+//     scrollController: widget.scrollController,
+//     scrollDirection: widget.scrollDirection,
+//     enablePullDown: widget.scrollDirection == Axis.vertical,
+//     enablePullUp: widget.withPagination != null
+//         ? widget.withPagination!
+//         : widget.scrollDirection == Axis.vertical,
+//     header: const MaterialClassicHeader(),
+//     controller: _refreshController,
+//     onRefresh: () async {
+//       cubit?.getList();
+//     },
+//     onLoading: () async {
+//       cubit?.getList(loadMore: true);
+//     },
+//     footer: customFooter,
+//     child: child,
+//   ),
+// );

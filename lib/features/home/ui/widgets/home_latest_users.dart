@@ -2,18 +2,31 @@
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/boilerplate/pagination/cubits/pagination_cubit.dart';
+import '../../../../core/boilerplate/pagination/widgets/pagination_list.dart';
 import '../../../../core/common/models/profile_model.dart';
 import '../../../../core/common/style/padding_insets.dart';
 import '../../../../core/constants/app_textStyle.dart';
 import '../../../../core/constants/appcolors.dart';
 import '../../../../core/utils/utils.dart';
+import '../../../users/data/repository/user_repository.dart';
+import '../../../users/data/use_case/get_users_use_case.dart';
 import '../../../users/ui/widgets/user_widget.dart';
 
-class HomeLatestUsers extends StatelessWidget {
+class HomeLatestUsers extends StatefulWidget {
   const HomeLatestUsers({
     super.key,
   });
+
+  @override
+  State<HomeLatestUsers> createState() => _HomeLatestUsersState();
+}
+
+class _HomeLatestUsersState extends State<HomeLatestUsers> {
+
+  late PaginationCubit usersCubit;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +52,9 @@ class HomeLatestUsers extends StatelessWidget {
                 ),
               ),
               TextButton(
-                  onPressed: (){},
+                  onPressed: (){
+                    context.go('/users');
+                  },
                   child: Text(
                     'show_all'.tr(),
                     style: AppText.fontSizeSmallTextStyle.copyWith(
@@ -51,42 +66,47 @@ class HomeLatestUsers extends StatelessWidget {
           ),
           SizedBox(
             height: 210,
-            child: LayoutBuilder(
-              builder: (context, constraints) {
-                int itemsPerRow = Utils.calculateRowItemsCount(
-                  constraints,
-                  216,
-                );
-                List<Widget> items = List.generate(
-                  10,
-                      (index) => UserWidget(userProfileModel: UserProfileModel(),),
-                );
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: (items.length / itemsPerRow).ceil(),
-                  itemBuilder: (context, rowIndex) {
-                    int startIndex = rowIndex * itemsPerRow;
-                    int endIndex = (startIndex + itemsPerRow).clamp(
-                      0,
-                      items.length,
-                    );
-                    List<Widget> rowItems = items.sublist(
-                      startIndex,
-                      endIndex,
-                    );
-
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: rowItems,
-                      ),
-                    );
-                  },
+            child: PaginationList<UserProfileModel>(
+              paddingTextErrorWidget: 4,
+              onCubitCreated: (cubit) => usersCubit = cubit,
+              repositoryCallBack: (model) {
+                return GetUsersUseCase(UserRepository())
+                    .call(
+                  params: GetUsersParams(
+                    request: model,
+                  ),
                 );
               },
+              listBuilder: (list) {
+                return
+                  LayoutBuilder(
+                    builder: (context, constraints) {
+                      int itemsPerRow = Utils.calculateRowItemsCount(constraints, 216);
+                      List<Widget> items = List.generate(list.length, (index) => UserWidget(userProfileModel: list[index],));
+
+                      return ListView.builder(
+                        itemCount: (items.length / itemsPerRow).ceil(),
+                        itemBuilder: (context, rowIndex) {
+                          int startIndex = rowIndex * itemsPerRow;
+                          int endIndex = (startIndex + itemsPerRow).clamp(
+                            0,
+                            items.length,
+                          );
+                          List<Widget> rowItems = items.sublist(startIndex, endIndex);
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: rowItems,
+                            ),
+                          );
+                        },
+                      );
+                    },
+                  );
+              },
+              withPagination: false,
             ),
           ),
         ],

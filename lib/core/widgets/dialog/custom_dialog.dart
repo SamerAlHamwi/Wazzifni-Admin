@@ -44,7 +44,8 @@ Future showCustomDialog({
               Gaps.vGap2,
               Image.asset(
                 AppAssets.logo,
-                width: 40.w,
+                width: 150,
+                height: 150,
               ),
               Gaps.vGap2,
               text.isNotEmpty ? Text(
