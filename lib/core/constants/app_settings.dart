@@ -6,7 +6,7 @@ class AppSettings{
   static bool debug = false;
   static String appFont = 'Cairo';
   // static String BASE_URL = 'http://147.93.46.66:8080';
-  static String BASE_URL = 'https://cors-anywhere.herokuapp.com/http://4.157.252.54:8080';
+  static String BASE_URL = 'http://4.157.252.54:8080'; //https://cors-anywhere.herokuapp.com/
 
 }
 
